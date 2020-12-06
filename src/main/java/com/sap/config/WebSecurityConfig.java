@@ -11,6 +11,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.sap.repository.RoleRepository;
+import com.sap.repository.UserRepository;
+import com.sap.service.UserDetailsServiceImpl;
+import com.sap.service.UserService;
+import com.sap.service.UserServiceImpl;
+import com.sap.validator.UserValidator;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
@@ -18,9 +25,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    @Bean
+    public UserServiceImpl getService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        return new UserServiceImpl(userRepository, roleRepository, bCryptPasswordEncoder);
+    }
+    @Bean
+    public UserDetailsServiceImpl getDetailsService(UserRepository userRepository) {
+    	return new UserDetailsServiceImpl(userRepository);
+    }
+    @Bean
+    public UserValidator setValidator(UserService userService) {
+    	return new UserValidator(userService);
     }
 
     @Override
@@ -28,6 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/resources/**", "/registration").permitAll()
+     //               .antMatchers("/h2-console/**").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
@@ -36,11 +57,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .permitAll();
+
     }
+  
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 }
-

@@ -2,24 +2,26 @@ package com.sap.service;
 
 import java.util.HashSet;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import com.sap.model.User;
 import com.sap.repository.RoleRepository;
 import com.sap.repository.UserRepository;
 
 
-@Service
 public class UserServiceImpl implements UserService {
-	@Autowired
-	private UserRepository userRepository;
-	@Autowired
-	private RoleRepository roleRepository;
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	private UserRepository userRepository;
+
+	private RoleRepository roleRepository;
+
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
+        this.userRepository=userRepository;
+        this.roleRepository = roleRepository;
+        this.bCryptPasswordEncoder=bCryptPasswordEncoder;
+    }
 	@Override
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

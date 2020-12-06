@@ -1,7 +1,5 @@
 package com.sap.validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -10,10 +8,11 @@ import com.sap.model.User;
 import com.sap.service.UserService;
 
 
-@Component
 public class UserValidator implements Validator {
-    @Autowired
     private UserService userService;
+    public UserValidator(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {
