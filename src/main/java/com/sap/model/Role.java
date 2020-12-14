@@ -2,15 +2,21 @@ package com.sap.model;
 
 import javax.persistence.*;
 
+import com.sap.repository.RoleRepository;
+
 import java.util.Set;
 
 @Entity
-@Table(name = "role")
+//@Table(name = "role")
 public class Role {
-    private Long id;
-    private String name;
+    private Long id; 
+    private String name; // ROLE_ADMIN ROLE_USER
     private Set<User> users;
-
+    public Role() {
+    }
+    public Role(String name) {
+    	this.name =name;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {

@@ -1,55 +1,63 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Log in</title>
 
-    <title>Log in with your account</title>
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="${contextPath}/resources/fonts/material-icon/css/material-design-iconic-font.min.css">
 
-    <link href="${contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${contextPath}/resources/css/common.css" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- Main css -->
+    <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 </head>
+<body style="background-image: url('${contextPath}/resources/img/signin1.jpeg');">
 
-<body>
-
-<div class="container">
-
-    <form method="POST" action="${contextPath}/login" class="form-signin">
-        <h2 class="form-heading">Log in</h2>
-
-        <div class="form-group ${error != null ? 'has-error' : ''}">
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                <form:form method="POST" action="${contextPath}/login" id="signup-form" class="form-signin">
+     <h2 class="form-title">Log in</h2>
+     <div class="form-group">
+     <div class="form-group ${error != null ? 'has-error' : ''}">
             <span>${message}</span>
-            <input name="username" type="text" class="form-control" placeholder="Username"
-                   autofocus="true"/>
-            <input name="password" type="password" class="form-control" placeholder="Password"/>
+            <input name="username" type="text" class="form-input" placeholder="Username" autofocus="true"/>
+            </div>
+        </div>
+                 <input name="password" type="password" class="form-input" placeholder="Password"/>
             <span>${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+               <div class="form-group">
+                   <input type="submit" name="submit" id="submit" class="form-submit" value="Sign In"/>
+               </div>
+          </form:form>
+          <sec:authorize access="isAuthenticated()">
+   <p>You are logged in <a href="${contextPath}/welcome" class="loginhere-link">Visit your account</a></p>
+</sec:authorize>
+<sec:authorize access="isAnonymous()">
+   <p>You are not logged in</p>
+</sec:authorize>
+                    <p class="loginhere">
+                        You don't have an account?<a href="${contextPath}/registration" class="loginhere-link"> Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Log In</button>
-            <h4 class="text-center"><a href="${contextPath}/registration">Create an account</a></h4>
-        </div>
-
-    </form>
-
-</div>
-<!-- /container -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="${contextPath}/resources/js/bootstrap.min.js"></script>
+    <!-- JS -->
+    <script src="${contextPath}/resources/vendor/jquery/jquery.min.js"></script>
+    <script src="${contextPath}/resources/js/main.js"></script>
 </body>
 </html>

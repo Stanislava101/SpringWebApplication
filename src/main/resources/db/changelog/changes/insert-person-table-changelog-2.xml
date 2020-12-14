@@ -8,13 +8,9 @@
     <changeSet author="admin" id="2">
         <insert tableName="user">
             <column name="id" valueNumeric="1"/>
-            <column name="username" value="admin8"/>
-            <column name="password" value="12345678"/>
-        </insert>
-        <insert tableName="role">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="admin"/>
-            <column name="users" value="1"/>
+            <column name="name" value="ROLE_ADMIN"/>
+            <column name="username" value="admin9"/>
+            <column name="password" value="$2a$10$.fYDZl1eFRUL5sApwlxvF.XDQmAXoxbROQRUFffUYGtxGDJzJyRVy"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.sap.model.User;
 import com.sap.service.UserService;
@@ -27,6 +28,13 @@ public class UserController {
 
         return "registration";
     }
+    @RequestMapping(value="/admin", method = RequestMethod.GET)
+    	public ModelAndView adminHome() {
+    		ModelAndView modelAndView = new ModelAndView();
+    		modelAndView.setViewName("admin");
+    		return modelAndView;
+    	}
+    
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
@@ -38,8 +46,9 @@ public class UserController {
 
         userService.save(userForm);
 
-        return "redirect:/welcome";
+        return "redirect:/h2-console";
     }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
@@ -56,4 +65,5 @@ public class UserController {
     public String welcome(Model model) {
         return "welcome";
     }
+    
 }

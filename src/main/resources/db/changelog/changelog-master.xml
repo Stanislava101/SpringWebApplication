@@ -7,4 +7,11 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <include file="/db/changelog/changes/create-person-table-changelog-1.xml"/>
     <include file="/db/changelog/changes/insert-person-table-changelog-2.xml"/>
+    
+        <include file="/db/changelog/changes/create-role-changelog.xml"/>
+    <include file="/db/changelog/changes/insert-role-changelog.xml"/>
+    
+            <include file="/db/changelog/changes/create-user_role-changelog.xml"/>
+    <include file="/db/changelog/changes/insert-user_role-changelog.xml"/>
+
 </databaseChangeLog>

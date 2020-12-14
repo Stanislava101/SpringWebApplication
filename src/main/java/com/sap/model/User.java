@@ -1,17 +1,21 @@
 package com.sap.model;
 
 import javax.persistence.*;
+
+import com.sap.repository.RoleRepository;
+
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
+//@Table(name = "user")
 public class User {
     private Long id;
-    private String username;
-    private String password;
-    private String passwordConfirm;
+    private String username; 
+    private String password; 
+    private String passwordConfirm; 
+    private String name; //ROLE_ADMIN & ROLE_USER
     private Set<Role> roles;
-
+    RoleRepository roleRepository;
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
         return id;
@@ -37,6 +41,13 @@ public class User {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     @Transient
     public String getPasswordConfirm() {
         return passwordConfirm;
@@ -55,5 +66,6 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+    
 }
 
