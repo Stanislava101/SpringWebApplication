@@ -13,5 +13,8 @@
     
             <include file="/db/changelog/changes/create-user_role-changelog.xml"/>
     <include file="/db/changelog/changes/insert-user_role-changelog.xml"/>
+    
+                <include file="/db/changelog/changes/create-product-table-changelog.xml"/>
+    <include file="/db/changelog/changes/insert-product-table-changelog.xml"/>
 
 </databaseChangeLog>

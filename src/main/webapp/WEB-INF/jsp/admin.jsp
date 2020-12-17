@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>  
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional/<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -31,6 +32,44 @@
 <div class="container">
 <sec:authorize access="hasRole('ADMIN')">
     Manage Users
+        <sql:setDataSource
+        var="myDS"
+        driver="org.h2.Driver"
+        url="jdbc:h2:mem:ecommerce"
+        user="root" password="rootsa"
+    />
+    
+     
+    <sql:query var="employees"   dataSource="${myDS}">
+        SELECT * FROM product;
+    </sql:query>
+     
+    <div align="center">
+        <table border="1" cellpadding="5">
+            <caption><h2>List of users</h2></caption>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+            <c:forEach var="employee" items="${employees.rows}">
+                <tr>
+                    <td><c:out value="${employee.id}" /></td>
+                    <td><c:out value="${employee.type}" /></td>
+                    <td><c:out value="${employee.model}" /></td>
+                    <td><c:out value="${employee.quantity}" /></td>
+                    <td><a c:out value="@{/delete/{id}(id=${employee.id})}" class="btn btn-primary">
+                 Please</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+        <div th:switch="${employees}" class="container my-5">
+            <p class="my-5">
+                <a href="/log_in" class="btn btn-primary">
+                <i class="fas fa-user-plus ml-2"> Add Employee </i></a>
+            </p>
+            
+    </div>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
     Welcome Back, <sec:authentication property="name"/>

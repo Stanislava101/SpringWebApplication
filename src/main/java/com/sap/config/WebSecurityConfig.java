@@ -1,6 +1,8 @@
 package com.sap.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
@@ -16,12 +18,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.sap.model.Role;
 import com.sap.model.User;
+import com.sap.repository.ProductRepository;
 import com.sap.repository.RoleRepository;
+import com.sap.repository.SoldProductRepository;
 import com.sap.repository.UserRepository;
+import com.sap.service.ProductService;
 import com.sap.service.UserDetailsServiceImpl;
 import com.sap.service.UserService;
 import com.sap.service.UserServiceImpl;
 import com.sap.validator.UserValidator;
+import com.sap.service.ProductService;
+import com.sap.web.UserController;
+
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint; 
@@ -51,6 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	return new UserValidator(userService);
     }
     
+    @Bean
+    public ProductService productService(ProductRepository repository) {
+    	return new ProductService(repository);
+    }
+    
 
 
     @Override
@@ -61,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/").permitAll()
                     .antMatchers("/h2-console/**").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
+                    .antMatchers("/log_in/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
