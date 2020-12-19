@@ -1,13 +1,6 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>  
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional/<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
@@ -38,17 +31,6 @@
 </head>
 
 <body id="page-top">
-<sql:setDataSource
-        var="myDS"
-        driver="org.h2.Driver"
-        url="jdbc:h2:mem:ecommerce"
-        user="root" password="rootsa"
-    />
-    
-     
-    <sql:query var="products"   dataSource="${myDS}">
-        SELECT * FROM product;
-    </sql:query>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -380,11 +362,7 @@
                     <!-- Page Heading -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Manage Products</h1>
-                                    <p class="my-5">
-                <a href="/edit" class="btn btn-primary">
-                <i class="fas fa-user-plus ml-2"> Add Product </i></a>
-            </p>
+                        <h1 class="h3 mb-0 text-gray-800">Manage Clients</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -392,40 +370,29 @@
 
  <sec:authorize access="hasRole('ADMIN')">
 
-            
+             <form action="/createClient" method="post">
+                    	<div class="row">
+                            <div class="form-group col-md-8">
+                                <label for="name" class="col-form-label">Name</label> 
+                                <input type="text" name="name" class="form-control" 
+                                            id="firstName" value="Name"  required/>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="email" class="col-form-label">Email</label> 
+                                <input type="text" name="email" class="form-control" 
+                                            id="lastName" value="email" required/>
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="phoneNumber" class="col-form-label">PhoneNumber</label> 
+                                <input type="text" name="phoneNumber" class="form-control" 
+                                            id="email" value="0884259811" required/>
+                            </div>
+<div class="form-group col-md-8">
+<input type="hidden" name="hide" field="id" value="info">
 
-    
-                    <table class="table table-striped table-responsive-md">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Device</th>
-                                <th>Model</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           <c:forEach var="product" items="${products.rows}">
-                                <td><c:out value="${product.id}" /></td>
-                    <td><c:out value="${product.type}" /></td>
-                    <td><c:out value="${product.model}" /></td>
-                    <td><c:out value="${product.quantity}" /></td>
-                    <td><c:out value="${product.price}" /></td>
-                                <td>
-                                 <a href="edit/${product.id}">Edit</a>
-                                    
-                                </td>
-                                <td>
-                                <a href="delete/${product.id}">Del</a>
-                                
-                                </td>
-                            </tr>
-                        </tbody>
-                           </c:forEach>
-                    </table>
+        <input class="btn btn-primary" type="submit" value="Submit">
+               </div>         </div>
+                    </form>
                     </sec:authorize>
     </div></div></div>
                             </div>

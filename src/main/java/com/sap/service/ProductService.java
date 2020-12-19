@@ -24,6 +24,10 @@ public class ProductService {
 	
 	public long ID;
 	
+	public ProductService() {
+
+	}
+	
 	public ProductService(ProductRepository repository) {
 		this.repository=repository;
 	}

@@ -1,5 +1,6 @@
 package com.sap.service;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     	this.userRepository=userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
+        
     }
 
 	@Override

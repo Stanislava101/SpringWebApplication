@@ -46,8 +46,8 @@
     />
     
      
-    <sql:query var="products"   dataSource="${myDS}">
-        SELECT * FROM product;
+    <sql:query var="srepresentatives"   dataSource="${myDS}">
+        SELECT * FROM user;
     </sql:query>
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -380,10 +380,10 @@
                     <!-- Page Heading -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Manage Products</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Manage Sales representatives</h1>
                                     <p class="my-5">
-                <a href="/edit" class="btn btn-primary">
-                <i class="fas fa-user-plus ml-2"> Add Product </i></a>
+                <a href="/editSRepresentative" class="btn btn-primary">
+                <i class="fas fa-user-plus ml-2"> Add Sales representative </i></a>
             </p>
                     </div>
 
@@ -392,34 +392,27 @@
 
  <sec:authorize access="hasRole('ADMIN')">
 
-            
-
-    
-                    <table class="table table-striped table-responsive-md">
+             <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Device</th>
-                                <th>Model</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
+                                <th>Username</th>
+                                <th>Password</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                           <c:forEach var="product" items="${products.rows}">
-                                <td><c:out value="${product.id}" /></td>
-                    <td><c:out value="${product.type}" /></td>
-                    <td><c:out value="${product.model}" /></td>
-                    <td><c:out value="${product.quantity}" /></td>
-                    <td><c:out value="${product.price}" /></td>
+                           <c:forEach var="srepresentative" items="${srepresentatives.rows}">
+                                <td><c:out value="${srepresentative.id}" /></td>
+                    <td><c:out value="${srepresentative.username}" /></td>
+                    <td><c:out value="${srepresentative.password}" /></td>
                                 <td>
-                                 <a href="edit/${product.id}">Edit</a>
+                                 <a href="editSRepresentative/${srepresentative.id}">Edit</a>
                                     
                                 </td>
                                 <td>
-                                <a href="delete/${product.id}">Del</a>
+                                <a href="deleteSR/${srepresentative.id}">Del</a>
                                 
                                 </td>
                             </tr>

@@ -46,8 +46,8 @@
     />
     
      
-    <sql:query var="products"   dataSource="${myDS}">
-        SELECT * FROM product;
+    <sql:query var="clients"   dataSource="${myDS}">
+        SELECT * FROM client;
     </sql:query>
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -380,10 +380,10 @@
                     <!-- Page Heading -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Manage Products</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Manage Clients</h1>
                                     <p class="my-5">
-                <a href="/edit" class="btn btn-primary">
-                <i class="fas fa-user-plus ml-2"> Add Product </i></a>
+                <a href="/editClient" class="btn btn-primary">
+                <i class="fas fa-user-plus ml-2"> Add Client</i></a>
             </p>
                     </div>
 
@@ -391,35 +391,29 @@
                     <div class="row">
 
  <sec:authorize access="hasRole('ADMIN')">
-
-            
-
-    
                     <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Device</th>
-                                <th>Model</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
+                                <th>Client name</th>
+                                <th>Email</th>
+                                <th>Phone number</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                           <c:forEach var="product" items="${products.rows}">
-                                <td><c:out value="${product.id}" /></td>
-                    <td><c:out value="${product.type}" /></td>
-                    <td><c:out value="${product.model}" /></td>
-                    <td><c:out value="${product.quantity}" /></td>
-                    <td><c:out value="${product.price}" /></td>
+                           <c:forEach var="client" items="${clients.rows}">
+                                <td><c:out value="${client.id}" /></td>
+                                <td><c:out value="${client.name}" /></td>
+                    <td><c:out value="${client.email}" /></td>
+                    <td><c:out value="${client.phone_number}" /></td>
                                 <td>
-                                 <a href="edit/${product.id}">Edit</a>
+                                 <a href="editClient/${client.id}">Edit</a>
                                     
                                 </td>
                                 <td>
-                                <a href="delete/${product.id}">Del</a>
+                                <a href="deleteClient/${client.id}">Del</a>
                                 
                                 </td>
                             </tr>

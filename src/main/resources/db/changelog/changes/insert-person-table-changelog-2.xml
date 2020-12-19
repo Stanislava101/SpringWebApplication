@@ -14,3 +14,7 @@
         </insert>
     </changeSet>
 </databaseChangeLog>
+
+<!-- abv123456 -->
+<!-- $2a$10$Y/vffgJ9shcQ9Z4PhG3jvOLRo5K4UBjhTSl8wytpUJUis.YqQfshy -->
+<!--  mai problema s povtorenata parola idva s registriraniq ot liquibase -->

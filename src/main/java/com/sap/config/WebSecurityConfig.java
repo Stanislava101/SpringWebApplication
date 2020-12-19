@@ -3,6 +3,7 @@ package com.sap.config;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
@@ -18,11 +19,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.sap.model.Role;
 import com.sap.model.User;
+import com.sap.repository.ClientRepository;
 import com.sap.repository.ProductRepository;
 import com.sap.repository.RoleRepository;
+import com.sap.repository.SRepresentativeRepository;
 import com.sap.repository.SoldProductRepository;
 import com.sap.repository.UserRepository;
+import com.sap.service.ClientService;
 import com.sap.service.ProductService;
+import com.sap.service.SRepresentativeService;
 import com.sap.service.UserDetailsServiceImpl;
 import com.sap.service.UserService;
 import com.sap.service.UserServiceImpl;
@@ -62,6 +67,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ProductService productService(ProductRepository repository) {
     	return new ProductService(repository);
+    }
+    @Bean
+    public SRepresentativeService representativeService(SRepresentativeRepository repository, RoleRepository roleRepository,BCryptPasswordEncoder bCryptPasswordEncoder) {
+    	return new SRepresentativeService(repository, roleRepository, bCryptPasswordEncoder);
+    }
+    
+    @Bean
+    public ClientService clientService(ClientRepository repository) {
+    	return new ClientService(repository);
     }
     
 
