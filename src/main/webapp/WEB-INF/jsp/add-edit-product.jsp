@@ -31,6 +31,17 @@
 </head>
 
 <body id="page-top">
+<sql:setDataSource
+        var="myDS"
+        driver="org.h2.Driver"
+        url="jdbc:h2:mem:ecommerce"
+        user="root" password="rootsa"
+    />
+    
+     
+    <sql:query var="products"   dataSource="${myDS}">
+        SELECT id FROM product;
+    </sql:query>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -375,22 +386,22 @@
                             <div class="form-group col-md-8">
                                 <label for="type" class="col-form-label">Type</label> 
                                 <input type="text" name="type" class="form-control" 
-                                            id="firstName" value="Type"  required/>
+                                            id="firstName" value="<c:out value="${product.type}"/>" required/>
                             </div>
                             <div class="form-group col-md-8">
                                 <label for="model" class="col-form-label">Model</label> 
                                 <input type="text" name="model" class="form-control" 
-                                            id="lastName" value="Model" required/>
+                                            id="lastName" value="<c:out value="${product.model}"/>" required/>
                             </div>
                             <div class="form-group col-md-8">
                                 <label for="quantity" class="col-form-label">Quantity</label> 
                                 <input type="text" name="quantity" class="form-control" 
-                                            id="email" value="0" required/>
+                                            id="email" value="<c:out value="${product.quantity}"/>" required/>
                             </div>
                                                         <div class="form-group col-md-8">
                                 <label for="price" class="col-form-label">Price</label> 
                                 <input type="text" field="price" name="price" class="form-control" 
-                                            id="firstName" value="0" required/>
+                                            id="firstName" value="<c:out value="${product.price}"/>" required/>
                             </div>
 <div class="form-group col-md-8">
 <input type="hidden" name="hide" field="id" value="info">

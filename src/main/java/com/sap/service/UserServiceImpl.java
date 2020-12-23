@@ -2,6 +2,7 @@ package com.sap.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -30,7 +31,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		user.setRoles(new HashSet<>(roleRepository.findAll()));
+	//	user.setRoles(new HashSet<>(roleRepository.findAll()));
+		Role role = roleRepository.findByName("ROLE_ADMIN");
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+		user.setRoles(roles);
 		userRepository.save(user);
 			}
 
@@ -39,7 +44,8 @@ public class UserServiceImpl implements UserService {
 		
 		return userRepository.findByUsername(username);
 	}
-	
+
+
 	/*
 	public String smth(User user) {
 		String m = "";

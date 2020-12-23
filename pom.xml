@@ -36,7 +36,28 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		
+		<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-beans</artifactId>
+<version>5.3.2</version>
+<scope>compile</scope>
+</dependency>
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-context</artifactId>
+<version>5.3.2</version>
+<scope>compile</scope>
+</dependency>
+
+
+<dependency>
+<groupId>org.springframework</groupId>
+<artifactId>spring-core</artifactId>
+<version>5.3.2</version>
+<scope>compile</scope>
+</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -105,6 +126,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -113,6 +136,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
 		</plugins>
 	</build>
 </project>

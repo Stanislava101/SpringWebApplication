@@ -16,6 +16,7 @@
             <column name="model" type="VARCHAR(255)"/>
             <column name="quantity" type="INT"/>
             <column name="price" type="DOUBLE"/>
+            <column name="promotion" type="DOUBLE"/>
         </createTable>
         <rollback>
             <dropTable tableName="product"/>

@@ -18,6 +18,9 @@ public class SoldProduct {
     @Column(name="product")
     private String product;
     
+    @Column(name="date")
+    private String date;
+    
     public SoldProduct() {
     }
     public SoldProduct(String product) {
@@ -38,6 +41,14 @@ public class SoldProduct {
 
 	public void setProduct(String product) {
 		this.product = product;
+	}
+	
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
     @Override

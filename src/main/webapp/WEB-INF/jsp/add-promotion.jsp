@@ -31,17 +31,6 @@
 </head>
 
 <body id="page-top">
-<sql:setDataSource
-        var="myDS"
-        driver="org.h2.Driver"
-        url="jdbc:h2:mem:ecommerce"
-        user="root" password="rootsa"
-    />
-    
-     
-    <sql:query var="products"   dataSource="${myDS}">
-        SELECT id FROM client;
-    </sql:query>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -373,7 +362,7 @@
                     <!-- Page Heading -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Manage Clients</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Manage Promotions</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -381,28 +370,20 @@
 
  <sec:authorize access="hasRole('ADMIN')">
 
-             <form action="/createClient" method="post">
+             <form action="/createPromotion" method="post">
                     	<div class="row">
                             <div class="form-group col-md-8">
-                                <label for="name" class="col-form-label">Name</label> 
-                                <input type="text" name="name" class="form-control" 
-                                            id="firstName" value="<c:out value="${client.name}"/>" required/>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <label for="email" class="col-form-label">Email</label> 
-                                <input type="text" name="email" class="form-control" 
-                                            id="lastName" value="<c:out value="${client.email}"/>" required/>
-                            </div>
-                            <div class="form-group col-md-8">
-                                <label for="phoneNumber" class="col-form-label">PhoneNumber</label> 
-                                <input type="text" name="phoneNumber" class="form-control" 
-                                            id="email" value="<c:out value="${client.phoneNumber}"/>" required/>
+                                  <div class="form-group col-md-8">
+                                <label for="price" class="col-form-label">Promotion</label> 
+                                <input type="text" field="promotion" name="promotion" class="form-control" 
+                                            id="firstName" value="0" required/>
                             </div>
 <div class="form-group col-md-8">
 <input type="hidden" name="hide" field="id" value="info">
 
         <input class="btn btn-primary" type="submit" value="Submit">
-               </div>         </div>
+        </div>
+                        </div>
                     </form>
                     </sec:authorize>
     </div></div></div>

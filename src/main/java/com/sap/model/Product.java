@@ -27,6 +27,12 @@ public class Product {
     @Column(name="quantity")
     private int quantity;
     
+    @Column(name="promotion")
+    private Double promotion;
+    
+    @Column(name="date")
+    private String date;
+    
 	public Long getId() {
 		return id;
 	}
@@ -66,10 +72,24 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity=quantity;
 	}
+	public Double getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(Double promotion) {
+		this.promotion=promotion;
+	}
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
 
     @Override
     public String toString() {
         return "EmployeeEntity [id=" + id + ", type=" + type + 
-                ", model=" + model +"quantity= " + quantity   + "]";
+                ", model=" + model +"quantity= " + quantity  + ",promotion = " + promotion  + "]";
     }
 }

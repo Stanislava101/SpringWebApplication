@@ -1,8 +1,10 @@
 package com.sap.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -15,15 +17,17 @@ import com.sap.repository.ProductRepository;
 import com.sap.repository.RoleRepository;
 
 import com.sap.repository.SRepresentativeRepository;
+import com.sap.repository.UserRepository;
 
-public class SRepresentativeService {
+public class SRepresentativeService implements UserService {
 	SRepresentativeRepository repository;
 	RoleRepository roleRepository;
+	UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	public long ID;
 	
 	public SRepresentativeService(SRepresentativeRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-		//roleRepository.save(new Role("ROLE_USER"));
+	//	roleRepository.save(new Role("ROLE_USERX"));
 		this.repository=repository;
 		this.roleRepository = roleRepository;
 		this.bCryptPasswordEncoder =bCryptPasswordEncoder;
@@ -61,7 +65,12 @@ public class SRepresentativeService {
 		{
 			System.out.println(entity.getId());
 			entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
-			entity = repository.save(entity);
+			Role role = roleRepository.findByName("ROLE_USER");
+			Set<Role> roles = new HashSet<>();
+			roles.add(role);
+			entity.setRoles(roles);
+			userRepository.save(entity);
+			entity = userRepository.save(entity);
 		return entity;
 		} 
 		else
@@ -99,5 +108,22 @@ public class SRepresentativeService {
 		} else {
 			throw new RecordNotFoundException("No record exist for given id");
 		}
-	} 
+	}
+
+	@Override
+	public void save(User user) {
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	//	user.setRoles(new HashSet<>(roleRepository.findAll()));
+		Role role = roleRepository.findByName("ROLE_USER");
+		Set<Role> roles = new HashSet<>();
+		roles.add(role);
+		user.setRoles(roles);
+		userRepository.save(user);
+			}
+
+	@Override
+	public User findByUsername(String username) {
+		
+		return userRepository.findByUsername(username);
+	}
 }

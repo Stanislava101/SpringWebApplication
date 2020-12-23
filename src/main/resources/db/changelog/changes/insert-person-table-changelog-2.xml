@@ -12,6 +12,12 @@
             <column name="username" value="admin9"/>
             <column name="password" value="$2a$10$.fYDZl1eFRUL5sApwlxvF.XDQmAXoxbROQRUFffUYGtxGDJzJyRVy"/>
         </insert>
+                <insert tableName="user">
+            <column name="id" valueNumeric="4"/>
+            <column name="name" value="ROLE_USER"/>
+            <column name="username" value="admin7"/>
+            <column name="password" value="$2a$10$.fYDZl1eFRUL5sApwlxvF.XDQmAXoxbROQRUFffUYGtxGDJzJyRVy"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>
 

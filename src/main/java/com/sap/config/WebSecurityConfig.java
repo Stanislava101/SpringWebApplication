@@ -2,13 +2,16 @@ package com.sap.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,9 +55,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    @Primary
     public UserServiceImpl getService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         return new UserServiceImpl(userRepository, roleRepository, bCryptPasswordEncoder);
     }
+    
     @Bean
     public UserDetailsServiceImpl getDetailsService(UserRepository userRepository) {
     	return new UserDetailsServiceImpl(userRepository);
@@ -65,9 +70,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
-    public ProductService productService(ProductRepository repository) {
-    	return new ProductService(repository);
+    public ProductService productService(ProductRepository repository, SoldProductRepository spRepository) {
+    	return new ProductService(repository, spRepository);
     }
+    
     @Bean
     public SRepresentativeService representativeService(SRepresentativeRepository repository, RoleRepository roleRepository,BCryptPasswordEncoder bCryptPasswordEncoder) {
     	return new SRepresentativeService(repository, roleRepository, bCryptPasswordEncoder);
@@ -78,8 +84,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	return new ClientService(repository);
     }
     
-
-
+   // @Bean
+   // public SendEmailService emailService(JavaMailSender javaMailSender) {
+   // 	return new SendEmailService(javaMailSender);
+   // }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

@@ -10,10 +10,10 @@
             <column name="id" valueNumeric="2"/>
             <column name="name" value="ROLE_ADMIN"/>
         </insert>
-    <!-- <insert tableName="role">
+    		<insert tableName="role">
             <column name="id" valueNumeric="3"/>
             <column name="name" value="ROLE_USER"/>
         </insert>
-    -->
+   
     </changeSet>
 </databaseChangeLog>

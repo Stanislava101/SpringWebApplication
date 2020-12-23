@@ -12,6 +12,7 @@
             <column name="model" value="LG"/>
             <column name="quantity" value="5"/>
             <column name="price" value="5555.55"/>
+            <column name="price" value="0"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

@@ -1,12 +1,16 @@
 package com.sap.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
+import com.sap.model.Role;
 import com.sap.repository.ClientRepository;
+import com.sap.repository.RoleRepository;
 
 
 public class ClientService {
