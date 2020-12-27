@@ -1,3 +1,7 @@
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -5,9 +9,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>  
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
-<%@ page import="java.sql.*" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -47,59 +48,14 @@ pageEncoding="ISO-8859-1"%>
         url="jdbc:h2:mem:ecommerce"
         user="root" password="rootsa"
     />
-    
      
     <sql:query var="products"   dataSource="${myDS}">
-        SELECT * FROM sold_product;
+        SELECT * FROM product;
     </sql:query>
-    
-    <%
-try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String strQuery = "SELECT COUNT(*) FROM sold_product";
-ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-while(rs.next()){
-Countrow = rs.getString(1);
-out.println("Number of sold products: " +Countrow);
-}
-}
-catch (Exception e){
-e.printStackTrace();
-}
-%>
-<%
-try
-{
-	Class.forName("org.h2.Driver").newInstance();
-	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sold_product";
-
-
-ResultSet rs = st.executeQuery(strQuery);
-double Countrun=0;
-//out.println("Profit : " + profit);
-while(rs.next()){
-Countrun = rs.getDouble(1);
-double profit = Countrun- (0.2+0.3); //dds + sebestoinost
-double roundProfit = (double) Math.round(profit * 100) / 100;
-double roundTurnover = (double) Math.round(Countrun * 100) / 100;
-out.println("Turnover :" + roundTurnover);
-out.println("Profit :" + roundProfit);
-}
-}
-catch (Exception e){
-e.printStackTrace();
-}
-%>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-               <!-- Sidebar -->
+                <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -127,7 +83,15 @@ e.printStackTrace();
             <div class="sidebar-heading">
                 Interface
             </div>
-
+ <sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="${contextPath}/srepresentativesData">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Sales representatives</span>
+                </a>
+            </li>
+            </sec:authorize>
 
             <!-- Nav Item - Utilities Collapse Menu -->
              <sec:authorize access="hasRole('USER')">
@@ -175,14 +139,39 @@ e.printStackTrace();
             </li>
 </sec:authorize>
 
-
+<sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Manage profile</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login">Login</a>
+                        <a class="collapse-item" href="registration">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                    </div>
+                </div>
+            </li>
+</sec:authorize>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
-
+ <sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="${contextPath}/productsDataList">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Products</span></a>
+            </li>
+</sec:authorize>
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -413,46 +402,61 @@ e.printStackTrace();
                     <!-- Page Heading -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Manage Sold products</h1>
-                            </div>
+                        <h1 class="h3 mb-0 text-gray-800">Manage Products</h1>
+                    </div>
 
                     <!-- Content Row -->
                     <div class="row">
 
  <sec:authorize access="hasRole('USER')">
- <div class="row">
-            <div class="form-group col-md-8">
-            <h1 class="h3 mb-0 text-gray-800">Search by day</h1>
-          <form class="form-inline" method="post" action="search">
-<input type="text" name="date" class="form-control" placeholder="Ex. 2011/02/25">
-<button type="submit" name="date" class="btn btn-primary">Search</button>
-</form>
-</div>
-        <div class="form-group col-md-8">
 
-            <h1 class="h3 mb-0 text-gray-800">Search period</h1>
-          <form class="form-inline" method="post" action="search2">
-<input type="text" name="date" class="form-control" placeholder="Ex. 2011/02/24">
-<input type="text" name="date2" class="form-control" placeholder="Ex. 2011/02/29">
-<button type="submit" name="date" class="btn btn-primary">Search</button>
-</form>
-</div>
+            
 
     
                     <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Product</th>
+                                <th>Type</th>
+                                <th>Model</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
                         <tbody>
-                           <c:forEach var="product" items="${products.rows}">
-                                <td><c:out value="${product.id}" /></td>
-                    <td><c:out value="${product.product}" /></td>
-                            </tr>
+                          <%
+try
+{
+Class.forName("org.h2.Driver").newInstance();
+Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
+Statement st=con.createStatement();
+String date=request.getParameter("date");
+String date2=request.getParameter("date2");
+System.out.println(date);
+System.out.println(date2);
+//String strQuery = "select * from sold_product where date='" + date +"' ";
+String strQuery = "select * from product where date >'" +date +"' AND date<'" + date2 +"'";
+//String strQuery = "select * from sold_product where id=1";
+ResultSet rs = st.executeQuery(strQuery);
+String Countrow="";
+
+while(rs.next()){
+Countrow = rs.getString(1);
+//out.println("Number of sold products: " +Countrow);
+%>
+<tr>
+<td><%=rs.getString("id") %></td>
+<td><%=rs.getString("type") %></td>
+<td><%=rs.getString("model") %></td>
+<td><%=rs.getString("price") %></td>
+</tr>
+<%
+}
+}
+catch (Exception e){
+e.printStackTrace();
+}
+%>
                         </tbody>
-                           </c:forEach>
                     </table>
                     </sec:authorize>
     </div></div></div>

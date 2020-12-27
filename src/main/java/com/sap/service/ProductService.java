@@ -266,10 +266,10 @@ public class ProductService {
 			//newEntity.setDate(entity.getDate());
 			soldProduct(fl,newEntity.getModel(), newEntity.getPrice(), newEntity.getDate());
 		//	topSoldProducts(newEntity);
-		//	sendEmail.getMailProperties();
+			sendEmail.getMailProperties();
 			if(fl<0) {
 				newEntity.setQuantity(0);
-		//		sendEmail.getMailProperties();
+				sendEmail.getMailProperties();
 			}
 			//newEntity.setDate(entity.getDate());
 			System.out.println(newEntity.getDate());

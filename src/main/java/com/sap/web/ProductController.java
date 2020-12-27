@@ -118,6 +118,17 @@ public class ProductController {
 		
 		return "search";
 	}
+	
+	@RequestMapping(path = "/search2")
+	public String search2Products(Model model) 
+	{	
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "search2";
+	}
 	@RequestMapping(path = "/delete/{id}")
 	public String deleteProductById(Model model, @PathVariable("id") Long id) 
 							throws RecordNotFoundException 

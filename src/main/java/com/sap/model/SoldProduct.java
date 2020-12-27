@@ -24,6 +24,7 @@ public class SoldProduct {
     @Column(name="date")
     private String date;
     
+    
     @Column(name="representativeID")
     private Long representativeID;
     
@@ -72,6 +73,7 @@ public class SoldProduct {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	
 	
 	public Long getRepresentativeID() {
 		return representativeID;

@@ -358,13 +358,12 @@
 
              <form action="/saleProduct" method="post">
                     	<div class="row">
-                            <div class="form-group col-md-8">
                                   <div class="form-group col-md-8">
                                 <label for="date" class="col-form-label">Date</label> 
                                 <input type="text" field="date" name="date" class="form-control" 
                                             id="firstName" value="0" required/>
-                            </div>
-<div class="form-group col-md-8">
+                                            </div>
+                   <div class="form-group col-md-8">
 <input type="hidden" name="hide" field="id" value="info">
 
         <input class="btn btn-primary" type="submit" value="Submit">
