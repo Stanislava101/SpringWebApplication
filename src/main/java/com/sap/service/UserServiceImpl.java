@@ -7,8 +7,10 @@ import java.util.Set;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.sap.model.Role;
+import com.sap.model.SoldProduct;
 import com.sap.model.User;
 import com.sap.repository.RoleRepository;
+import com.sap.repository.SoldProductRepository;
 import com.sap.repository.UserRepository;
 
 
@@ -20,11 +22,13 @@ public class UserServiceImpl implements UserService {
 
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
   //  	roleRepository.save(new Role("ROLE_USER"));
     	this.userRepository=userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
+
         
     }
 

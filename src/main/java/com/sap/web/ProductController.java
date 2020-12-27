@@ -82,6 +82,20 @@ public class ProductController {
 		return "list-salesProducts";
 	}
 	
+	@RequestMapping(path = "/productsDataList")
+	public String getAllProductsList(Model model) 
+	{	
+		System.out.println("getAllProducts");
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "list-products_admin";
+	}
+	
+
+	
 	@RequestMapping(path = "/soldProductsData")
 	public String getAllSoldProducts(Model model) 
 	{	
@@ -92,6 +106,17 @@ public class ProductController {
 		model.addAttribute("products", list);
 		
 		return "soldProducts";
+	}
+	
+	@RequestMapping(path = "/search")
+	public String searchProducts(Model model) 
+	{	
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "search";
 	}
 	@RequestMapping(path = "/delete/{id}")
 	public String deleteProductById(Model model, @PathVariable("id") Long id) 

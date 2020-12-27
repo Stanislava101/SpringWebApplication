@@ -5,6 +5,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>  
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -49,10 +52,53 @@
     <sql:query var="products"   dataSource="${myDS}">
         SELECT * FROM sold_product;
     </sql:query>
+    
+    <%
+try
+{
+Class.forName("org.h2.Driver").newInstance();
+Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
+Statement st=con.createStatement();
+String strQuery = "SELECT COUNT(*) FROM sold_product";
+ResultSet rs = st.executeQuery(strQuery);
+String Countrow="";
+while(rs.next()){
+Countrow = rs.getString(1);
+out.println("Number of sold products: " +Countrow);
+}
+}
+catch (Exception e){
+e.printStackTrace();
+}
+%>
+
+<%
+try
+{
+	Class.forName("org.h2.Driver").newInstance();
+	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
+Statement st=con.createStatement();
+String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sold_product";
+
+
+ResultSet rs = st.executeQuery(strQuery);
+double Countrun=0;
+//out.println("Profit : " + profit);
+while(rs.next()){
+Countrun = rs.getDouble(1);
+double profit = Countrun- (0.2+0.3); //dds + sebestoinost
+out.println("Turnover :" +Countrun);
+out.println("Profit :" +profit);
+}
+}
+catch (Exception e){
+e.printStackTrace();
+}
+%>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
+               <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -81,32 +127,25 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/srepresentativesData">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Sales representatives</span>
-                </a>
-            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
+             <sec:authorize access="hasRole('USER')">
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                <a class="nav-link collapsed" href="${contextPath}/clientsData" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>Clients</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
+                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
                     </div>
                 </div>
             </li>
+            </sec:authorize>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -116,26 +155,25 @@
                 Addons
             </div>
 
+<sec:authorize access="hasRole('USER')">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>Manage products</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
+                        <h6 class="collapse-header">Manage products</h6>
+                        <a class="collapse-item" href="${contextPath}/productsData">Products</a>
+
+                        <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
+                        <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
                 </div>
             </li>
+</sec:authorize>
+
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -144,12 +182,6 @@
                     <span>Charts</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/productsData">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Products</span></a>
-            </li>
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -386,10 +418,13 @@
                     <!-- Content Row -->
                     <div class="row">
 
- <sec:authorize access="hasRole('ADMIN')">
+ <sec:authorize access="hasRole('USER')">
 
             
-
+          <form class="form-inline" method="post" action="search">
+<input type="text" name="date" class="form-control" placeholder="Search roll no..">
+<button type="submit" name="date" class="btn btn-primary">Search</button>
+</form>
     
                     <table class="table table-striped table-responsive-md">
                         <thead>

@@ -19,18 +19,19 @@ import com.sap.repository.RoleRepository;
 import com.sap.repository.SRepresentativeRepository;
 import com.sap.repository.UserRepository;
 
-public class SRepresentativeService implements UserService {
+public class SRepresentativeService implements SRepresentativeService2 {
 	SRepresentativeRepository repository;
 	RoleRepository roleRepository;
 	UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	public long ID;
 	
-	public SRepresentativeService(SRepresentativeRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public SRepresentativeService(SRepresentativeRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
 	//	roleRepository.save(new Role("ROLE_USERX"));
 		this.repository=repository;
 		this.roleRepository = roleRepository;
 		this.bCryptPasswordEncoder =bCryptPasswordEncoder;
+		this.userRepository = userRepository;
 	}
 
 	public List<User> getAllProducts()
@@ -83,12 +84,14 @@ public class SRepresentativeService implements UserService {
 				User newEntity = product.get();
 				newEntity.setUsername(entity.getUsername());
 				newEntity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+			//	newEntity.setPassword(entity.getPassword());
 				//newEntity.setPassword(entity.getPassword());
 				newEntity = repository.save(newEntity);
 
 				return newEntity;
 			} else {
-				entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+				//entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+				entity.setPassword(entity.getPassword());
 				entity = repository.save(entity);
 			}
 		}

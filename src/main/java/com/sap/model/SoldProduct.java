@@ -18,13 +18,26 @@ public class SoldProduct {
     @Column(name="product")
     private String product;
     
+    @Column(name="price")
+    private double price;
+    
     @Column(name="date")
     private String date;
     
+    @Column(name="representativeID")
+    private Long representativeID;
+    
     public SoldProduct() {
     }
-    public SoldProduct(String product) {
+    public SoldProduct(String product, double price, String date, Long representativeID) {
     	this.product =product;
+    	this.price = price;
+    	this.date = date;
+    	this.representativeID = representativeID;
+    }
+    
+    public SoldProduct(Long representativeID) {
+    	this.representativeID = representativeID;
     }
     
 	public Long getId() {
@@ -43,12 +56,29 @@ public class SoldProduct {
 		this.product = product;
 	}
 	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	
 	public String getDate() {
 		return date;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public Long getRepresentativeID() {
+		return representativeID;
+	}
+
+	public void setRepresentativeID(Long represenativeID) {
+		this.representativeID = representativeID;
 	}
 
     @Override

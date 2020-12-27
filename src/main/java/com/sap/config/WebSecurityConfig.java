@@ -75,8 +75,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
-    public SRepresentativeService representativeService(SRepresentativeRepository repository, RoleRepository roleRepository,BCryptPasswordEncoder bCryptPasswordEncoder) {
-    	return new SRepresentativeService(repository, roleRepository, bCryptPasswordEncoder);
+    public SRepresentativeService representativeService(SRepresentativeRepository repository, RoleRepository roleRepository,BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
+    	return new SRepresentativeService(repository, roleRepository, bCryptPasswordEncoder, userRepository);
     }
     
     @Bean
@@ -88,15 +88,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
    // public SendEmailService emailService(JavaMailSender javaMailSender) {
    // 	return new SendEmailService(javaMailSender);
    // }
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/resources/**", "/registration").permitAll()
+                    .antMatchers("/resources/**", "/login").permitAll()
                     .antMatchers("/").permitAll()
                     .antMatchers("/h2-console/**").permitAll()
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/log_in/**").hasRole("ADMIN")
+
+                    .antMatchers("/registration/**").hasRole("ADMIN")
+                    .antMatchers("/srepresentativesData/**").hasRole("ADMIN")
+                    .antMatchers("/editSRepresentative/**").hasRole("ADMIN")
+                    .antMatchers("/edit/**").hasRole("ADMIN")
+                    .antMatchers("/clientsData/**").hasRole("USER")
+                    .antMatchers("/editClient/**").hasRole("USER")
+                    .antMatchers("/saleProducts/**").hasRole("USER")
+                    .antMatchers("/sales/**").hasRole("USER")
+                    .antMatchers("/soldProductsData/**").hasRole("USER")
+                    .antMatchers("/productsData/**").hasRole("USER")
+                    .antMatchers("/productsDataList/**").hasRole("ADMIN")
+                    .antMatchers("/promotion/**").hasRole("USER")
+                    .antMatchers("/view/**").hasRole("USER")
+                    
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

@@ -10,7 +10,7 @@
             <column name="id" valueNumeric="1"/>
             <column name="type" value="TV"/>
             <column name="model" value="LG"/>
-            <column name="quantity" value="5"/>
+            <column name="quantity" value="3"/>
             <column name="price" value="5555.55"/>
             <column name="price" value="0"/>
         </insert>

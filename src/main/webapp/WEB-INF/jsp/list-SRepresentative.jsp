@@ -5,6 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>  
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
@@ -47,12 +49,17 @@
     
      
     <sql:query var="srepresentatives"   dataSource="${myDS}">
-        SELECT * FROM user;
+        select e.*, p.name
+    from User e
+    inner join User_role s on s.USER_ID= e.id
+    inner join Role p on p.id = s.ROLE_ID
+where p.name = 'ROLE_USER' 
+
     </sql:query>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
+               <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -80,7 +87,7 @@
             <div class="sidebar-heading">
                 Interface
             </div>
-
+ <sec:authorize access="hasRole('ADMIN')">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="${contextPath}/srepresentativesData">
@@ -88,25 +95,26 @@
                     <span>Sales representatives</span>
                 </a>
             </li>
+            </sec:authorize>
 
             <!-- Nav Item - Utilities Collapse Menu -->
+             <sec:authorize access="hasRole('USER')">
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                <a class="nav-link collapsed" href="${contextPath}/clientsData" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>Clients</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
+                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
                     </div>
                 </div>
             </li>
+            </sec:authorize>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -116,40 +124,58 @@
                 Addons
             </div>
 
+<sec:authorize access="hasRole('USER')">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>Manage products</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                        <h6 class="collapse-header">Manage products</h6>
+                        <a class="collapse-item" href="${contextPath}/productsData">Products</a>
+
+                        <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
+                        <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
+                </div>
+            </li>
+</sec:authorize>
+
+<sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Manage profile</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
                         <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login">Login</a>
+                        <a class="collapse-item" href="registration">Register</a>
+                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                     </div>
                 </div>
             </li>
-
+</sec:authorize>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Charts</span></a>
             </li>
-
+ <sec:authorize access="hasRole('ADMIN')">
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/productsData">
+                <a class="nav-link" href="${contextPath}/productsDataList">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Products</span></a>
             </li>
+</sec:authorize>
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -381,17 +407,53 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Manage Sales representatives</h1>
-                                    <p class="my-5">
-                <a href="/editSRepresentative" class="btn btn-primary">
-                <i class="fas fa-user-plus ml-2"> Add Sales representative </i></a>
-            </p>
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
 
  <sec:authorize access="hasRole('ADMIN')">
-
+ 
+                <form:form method="POST" modelAttribute="userForm" id="signup-form" class="signup-form">
+     <h2 class="form-title">Create account</h2>
+     <div class="form-group">
+                        <spring:bind path="username">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="text" path="username" class="form-input" placeholder="Username"
+                            autofocus="true"></form:input>
+                <form:errors path="username"></form:errors>
+            </div>
+        </spring:bind>
+        </div>
+                <spring:bind path="name">
+            <div class="form-group">
+                  <form:input type="text" path="name" class="form-input" placeholder="name"
+                            autofocus="true"></form:input>
+            </div>
+        </spring:bind> 
+        <spring:bind path="password">
+         <div class="form-group">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="password" path="password" class="form-input" placeholder="Password"></form:input>
+                <span toggle="#password" class="zmdi zmdi-eye field-icon toggle-password"></span>
+                <form:errors path="password"></form:errors>
+            </div>
+        </spring:bind>
+        </div>
+         <spring:bind path="passwordConfirm">
+          <div class="form-group">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <form:input type="password" path="passwordConfirm" class="form-input"
+                            placeholder="Confirm your password"></form:input>
+                <form:errors path="passwordConfirm"></form:errors>
+            </div>
+        </spring:bind>
+		</div>
+               <div class="form-group">
+                   <input type="submit" name="submit" id="submit" class="btn btn-primary" value="Sign In"/>
+               </div>
+        
+    </form:form>
              <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>

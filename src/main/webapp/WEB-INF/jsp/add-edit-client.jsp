@@ -45,7 +45,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-        <!-- Sidebar -->
+               <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -74,32 +74,25 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/srepresentativesData">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Sales representatives</span>
-                </a>
-            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
+             <sec:authorize access="hasRole('USER')">
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                <a class="nav-link collapsed" href="${contextPath}/clientsData" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span>Clients</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
+                        <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
+                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
                     </div>
                 </div>
             </li>
+            </sec:authorize>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -109,26 +102,24 @@
                 Addons
             </div>
 
+<sec:authorize access="hasRole('USER')">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span>Manage products</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
+                        <h6 class="collapse-header">Manage products</h6>
+                        <a class="collapse-item" href="${contextPath}/productsData">Products</a>
+                        <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
+                        <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
                 </div>
             </li>
+</sec:authorize>
+
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
@@ -137,12 +128,6 @@
                     <span>Charts</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/productsData">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Products</span></a>
-            </li>
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -379,7 +364,7 @@
                     <!-- Content Row -->
                     <div class="row">
 
- <sec:authorize access="hasRole('ADMIN')">
+ <sec:authorize access="hasRole('USER')">
 
              <form action="/createClient" method="post">
                     	<div class="row">
