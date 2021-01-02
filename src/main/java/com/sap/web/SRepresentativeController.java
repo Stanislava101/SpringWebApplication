@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sap.exception.RecordNotFoundException;
+import com.sap.model.Product;
 import com.sap.model.User;
 import com.sap.service.SRepresentativeService;
 import com.sap.service.SRepresentativeService2;
@@ -50,9 +51,6 @@ public class SRepresentativeController {
 	}
 	
 	
-	
-	
-	
 	   
 	    @RequestMapping(value = "/srepresentativesData", method = RequestMethod.GET)
 	    public String registration(Model model) {
@@ -60,6 +58,23 @@ public class SRepresentativeController {
 
 	        return "list-SRepresentative";
 	    }
+	    
+	    
+	    
+	    @RequestMapping(value = "/searchBySalesRepresentative")
+	    public String searchBySalesRepresentative(Model model) {
+	        model.addAttribute("userForm", new User());
+
+	        return "searchBySalesRepresentative";
+	    }
+	    
+	    @RequestMapping(value = "/searchResults")
+	    public String searchResults(Model model) {
+	        model.addAttribute("userForm", new User());
+
+	        return "searchResults";
+	    }
+	    
 
 	    @RequestMapping(value = "/srepresentativesData", method = RequestMethod.POST)
 	    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {

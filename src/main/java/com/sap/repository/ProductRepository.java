@@ -13,4 +13,5 @@ public interface ProductRepository
 
 	@Query("SELECT p FROM Product p WHERE p.type LIKE %?1%")
 	public List<Product> findAll(String keyword);
+
 }

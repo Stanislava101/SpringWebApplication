@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
 import com.sap.model.Role;
@@ -52,7 +55,10 @@ public class ClientService {
 	{
 		System.out.println("createOrUpdateClient");
 		// Create new entry 
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
 		entity.setId(ID);
+		entity.setRepresentative(username);
 		ID=0;
 		if(entity.getId()  == null) 
 		{

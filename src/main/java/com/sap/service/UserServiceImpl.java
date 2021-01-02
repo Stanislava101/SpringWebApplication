@@ -48,6 +48,10 @@ public class UserServiceImpl implements UserService {
 		
 		return userRepository.findByUsername(username);
 	}
+	
+	public Long idSearch(User user) {
+		return user.getId();
+	}
 
 
 	/*

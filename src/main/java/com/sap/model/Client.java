@@ -24,6 +24,11 @@ public class Client {
     @Column(name="phoneNumber")
     private String phoneNumber;
     
+    
+    @Column(name="representative")
+    private String representative;
+    
+    
 	public Long getId() {
 		return id;
 	}
@@ -54,6 +59,14 @@ public class Client {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public String getRepresentative() {
+		return representative;
+	}
+
+	public void setRepresentative(String representative) {
+		this.representative = representative;
 	}
 
 

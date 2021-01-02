@@ -429,12 +429,14 @@ try
 Class.forName("org.h2.Driver").newInstance();
 Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
 Statement st=con.createStatement();
+String username = request.getUserPrincipal().getName();
+System.out.println("Username is " + username);
 String date=request.getParameter("date");
 String date2=request.getParameter("date2");
 System.out.println(date);
 System.out.println(date2);
 //String strQuery = "select * from sold_product where date='" + date +"' ";
-String strQuery = "select * from product where date >'" +date +"' AND date<'" + date2 +"'";
+String strQuery = "select * from sales where date >'" +date +"' AND date<'" + date2 +"' AND REPRESENTATIVE_NAME='" + username +"'";
 //String strQuery = "select * from sold_product where id=1";
 ResultSet rs = st.executeQuery(strQuery);
 String Countrow="";
@@ -445,8 +447,8 @@ Countrow = rs.getString(1);
 %>
 <tr>
 <td><%=rs.getString("id") %></td>
-<td><%=rs.getString("type") %></td>
-<td><%=rs.getString("model") %></td>
+<td><%=rs.getString("product") %></td>
+<td><%=rs.getString("quantity") %></td>
 <td><%=rs.getString("price") %></td>
 </tr>
 <%

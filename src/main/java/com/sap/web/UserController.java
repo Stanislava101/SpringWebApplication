@@ -79,4 +79,9 @@ public class UserController {
         return "welcome";
     }
     
+    @RequestMapping(value = {"/index"}, method = RequestMethod.GET)
+    public String homePage(Model model) {
+        return "index";
+    }
+    
 }

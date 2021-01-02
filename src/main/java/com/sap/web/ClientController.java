@@ -6,18 +6,25 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
+import com.sap.model.User;
 import com.sap.service.ClientService;
+import com.sap.validator.ClientValidator;
 
 @Controller
 public class ClientController {
 	@Autowired
 	ClientService service;
+	
+	@Autowired
+	ClientValidator userValidator;
 	
 	
 	@RequestMapping(path = {"/editClient", "/editClient/{id}"})
@@ -66,4 +73,26 @@ public class ClientController {
 		service.createOrUpdateClient(client);
 		return "redirect:/";
 	}
+	
+	
+    @RequestMapping(value = "/registerSRepresentatives", method = RequestMethod.GET)
+    public String registration2(Model model) {
+        model.addAttribute("userForm2", new Client());
+
+        return "registerSRepresentatives";
+    }
+    
+
+    @RequestMapping(value = "/registerSRepresentatives", method = RequestMethod.POST)
+    public String registration3(@ModelAttribute("userForm2") Client userForm2, BindingResult bindingResult, Model model) {
+        userValidator.validate(userForm2, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registerSRepresentatives";
+        }
+
+        service.createOrUpdateClient(userForm2);
+
+        return "redirect:/h2-console";
+    }
 }

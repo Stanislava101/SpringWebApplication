@@ -408,7 +408,7 @@
                     <!-- Content Row -->
                     <div class="row">
 
- <sec:authorize access="hasRole('USER')">
+ <sec:authorize access="hasRole('ADMIN')">
 
             
 <%
@@ -419,7 +419,7 @@ Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","roots
 Statement st=con.createStatement();
 String date=request.getParameter("date");
 System.out.println(date);
-String strQuery = "select * from sold_product where date='" + date +"' ";
+String strQuery = "select * from sales where date='" + date +"' ";
 //String strQuery = "select * from sold_product where id=1";
 ResultSet rs = st.executeQuery(strQuery);
 String Countrow="";
@@ -434,15 +434,17 @@ out.println("Number of sold products: " +Countrow);
                             <tr>
                                 <th>ID</th>
                                 <th>Device</th>
-                                <th>Date</th>
+                                <th>Quantity left</th>
+                                <th>Price</th>
                             </tr>
                             
                         </thead>
                         <tbody>
                          <tr>
-	<td><%=rs.getString("id") %></td>
-	<td><%=rs.getString("product") %></td>
-	<td><%=rs.getString("date") %></td>
+<td><%=rs.getString("id") %></td>
+<td><%=rs.getString("product") %></td>
+<td><%=rs.getString("quantity") %></td>
+<td><%=rs.getString("price") %></td>
 </tr>
                         </tbody>
                     </table>

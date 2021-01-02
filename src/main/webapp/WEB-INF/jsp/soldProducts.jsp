@@ -423,7 +423,7 @@ e.printStackTrace();
  <div class="row">
             <div class="form-group col-md-8">
             <h1 class="h3 mb-0 text-gray-800">Search by day</h1>
-          <form class="form-inline" method="post" action="search">
+          <form class="form-inline" method="post" action="representativeSearchByDay">
 <input type="text" name="date" class="form-control" placeholder="Ex. 2011/02/25">
 <button type="submit" name="date" class="btn btn-primary">Search</button>
 </form>

@@ -26,6 +26,7 @@ import com.sap.repository.ClientRepository;
 import com.sap.repository.ProductRepository;
 import com.sap.repository.RoleRepository;
 import com.sap.repository.SRepresentativeRepository;
+import com.sap.repository.SalesRepository;
 import com.sap.repository.SoldProductRepository;
 import com.sap.repository.UserRepository;
 import com.sap.service.ClientService;
@@ -34,6 +35,7 @@ import com.sap.service.SRepresentativeService;
 import com.sap.service.UserDetailsServiceImpl;
 import com.sap.service.UserService;
 import com.sap.service.UserServiceImpl;
+import com.sap.validator.ClientValidator;
 import com.sap.validator.UserValidator;
 import com.sap.service.ProductService;
 import com.sap.web.UserController;
@@ -70,8 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
-    public ProductService productService(ProductRepository repository, SoldProductRepository spRepository) {
-    	return new ProductService(repository, spRepository);
+    public ProductService productService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository, UserRepository userRepository) {
+    	return new ProductService(repository, spRepository,salesRepository, userRepository);
     }
     
     @Bean
@@ -82,6 +84,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ClientService clientService(ClientRepository repository) {
     	return new ClientService(repository);
+    }
+    
+    @Bean
+    public ClientValidator setCValidator(ClientService userService) {
+    	return new ClientValidator(userService);
     }
     
    // @Bean

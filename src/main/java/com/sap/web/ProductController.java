@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Product;
+import com.sap.model.User;
 import com.sap.service.ProductService;
 
 @Controller
@@ -23,6 +24,8 @@ public class ProductController {
 	   @Autowired
 	    ProductService service;
 	
+
+	   
 	@RequestMapping(path = {"/edit", "/edit/{id}"})
 	public String editProductById(Model model, @PathVariable("id") Optional<Long> id) 
 							throws RecordNotFoundException 
@@ -94,6 +97,39 @@ public class ProductController {
 		return "list-products_admin";
 	}
 	
+	@RequestMapping(path = "/chart")
+	public String getCharts(Model model) 
+	{	
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "chart";
+	}
+	
+	@RequestMapping(path = "/chartLine")
+	public String getChartLine(Model model) 
+	{	
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "chartLine";
+	}
+	
+	@RequestMapping(path = "/chartPie")
+	public String getChartPie(Model model) 
+	{	
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "chartPie";
+	}
+	
 
 	
 	@RequestMapping(path = "/soldProductsData")
@@ -106,6 +142,42 @@ public class ProductController {
 		model.addAttribute("products", list);
 		
 		return "soldProducts";
+	}
+	
+	
+	@RequestMapping(path = "/adminSalesData")
+	public String getAllSalesData(Model model) 
+	{	
+		System.out.println("getAllProducts");
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "admin-sales";
+	}
+	
+	@RequestMapping(path = "/adminSearchByPeriod")
+	public String adminSearchByPeriod(Model model) 
+	{	
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "admin-searchbyperiod";
+	}
+	
+	
+	@RequestMapping(path = "/representativeSearchByDay")
+	public String representativeSearchByDay(Model model) 
+	{	
+		
+		List<Product> list = service.getAllProducts();
+
+		model.addAttribute("products", list);
+		
+		return "representative-searchbyday";
 	}
 	
 	@RequestMapping(path = "/search")
