@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +28,18 @@ public class Client {
     
     @Column(name="representative")
     private String representative;
+    
+    @OneToOne(mappedBy = "husband")
+    private Sales wife;
+    
+    public Client(){}
+    
+    public Client(String name,String phoneNumber, String email, String representative){
+      this.name = name;
+      this.phoneNumber=phoneNumber;
+      this.email = email;
+      this.representative=representative;
+    }
     
     
 	public Long getId() {
@@ -68,6 +81,14 @@ public class Client {
 	public void setRepresentative(String representative) {
 		this.representative = representative;
 	}
+	
+	 public void setWife(Sales wife){
+		    this.wife = wife;
+		  }
+		  
+		  public Sales getWife(){
+		    return this.wife;
+		  }
 
 
     @Override

@@ -16,12 +16,16 @@ import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
 import com.sap.model.User;
 import com.sap.service.ClientService;
+import com.sap.service.ProductService;
 import com.sap.validator.ClientValidator;
 
 @Controller
 public class ClientController {
 	@Autowired
 	ClientService service;
+	
+	@Autowired
+	ProductService pService;
 	
 	@Autowired
 	ClientValidator userValidator;
@@ -63,7 +67,8 @@ public class ClientController {
 		
 		System.out.println("deleteClientById = " + id);
 		
-		service.deleteClientById(id);
+	//	service.deleteClientById(id);
+		service.deleteSaleById(id);
 		return "redirect:/";
 	}
 

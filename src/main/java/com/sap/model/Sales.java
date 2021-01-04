@@ -1,10 +1,14 @@
 package com.sap.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name="Sales")
@@ -32,14 +36,32 @@ public class Sales {
     @Column(name="date")
     private String date;
     
-    public Sales(String representativeName, String clientName, String product, Double price, int quantity, String date) {
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "representative")
+  private Client husband;
+    
+    public Sales() {}
+
+    public Sales(String representativeName, String clientName, String product, Double price, int quantity, String date, Client husband) {
     	this.representativeName=representativeName;
     	this.clientName=clientName;
     	this.product=product;
     	this.price=price;
     	this.quantity=quantity;
     	this.date = date;
+    	this.husband=husband;
     }
+    
+    public Sales(String representativeName, Client husband) {
+    	this.representativeName=representativeName;
+    	this.clientName=clientName;
+    	this.product=product;
+    	this.price=price;
+    	this.quantity=quantity;
+    	this.date = date;
+    	this.husband=husband;
+    }
+    
     
 	public String getRepresentativeName() {
 		return representativeName;
@@ -87,5 +109,12 @@ public class Sales {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	  public void setHusband(Client husband){
+		    this.husband = husband;
+		  }
+		  
+		  public Client getHusband(){
+		    return this.husband;
+		  }
 }
 	

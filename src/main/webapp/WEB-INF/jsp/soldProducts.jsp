@@ -59,7 +59,9 @@ try
 Class.forName("org.h2.Driver").newInstance();
 Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
 Statement st=con.createStatement();
-String strQuery = "SELECT COUNT(*) FROM sold_product";
+String username = request.getUserPrincipal().getName();
+System.out.println("Username is " + username);
+String strQuery = "SELECT COUNT(*) FROM sold_product where REPRESENTATIVE_NAME ='" + username +"'";
 ResultSet rs = st.executeQuery(strQuery);
 String Countrow="";
 while(rs.next()){
@@ -77,7 +79,9 @@ try
 	Class.forName("org.h2.Driver").newInstance();
 	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
 Statement st=con.createStatement();
-String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sold_product";
+String username = request.getUserPrincipal().getName();
+System.out.println("Username is " + username);
+String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sold_product where REPRESENTATIVE_NAME ='" + username +"'";
 
 
 ResultSet rs = st.executeQuery(strQuery);
@@ -99,7 +103,7 @@ e.printStackTrace();
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-               <!-- Sidebar -->
+           <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -127,7 +131,15 @@ e.printStackTrace();
             <div class="sidebar-heading">
                 Interface
             </div>
-
+ <sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="${contextPath}/srepresentativesData">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Sales representatives</span>
+                </a>
+            </li>
+            </sec:authorize>
 
             <!-- Nav Item - Utilities Collapse Menu -->
              <sec:authorize access="hasRole('USER')">
@@ -142,7 +154,7 @@ e.printStackTrace();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
-                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
+                         <a class="collapse-item" href="${contextPath}/registerSRepresentatives">Add client</a>
                     </div>
                 </div>
             </li>
@@ -168,21 +180,71 @@ e.printStackTrace();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage products</h6>
                         <a class="collapse-item" href="${contextPath}/productsData">Products</a>
-
+                        
                         <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
                         <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
                 </div>
             </li>
 </sec:authorize>
 
-
+<sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Manage profile</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login">Login</a>
+                        <a class="collapse-item" href="registration">Register</a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link" href="adminSalesData">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Catalog</span></a>
             </li>
-
+                        <li class="nav-item">
+                <a class="nav-link" href="searchBySalesRepresentative">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Search by representative</span></a>
+            </li>
+</sec:authorize>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chartPie">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Most wanted comparison</span></a>
+            </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chartLine">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>How are the sales going</span></a>
+            </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chart">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Do we need more items</span></a>
+            </li>
+            
+            
+            
+ <sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="${contextPath}/productsDataList">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Products</span></a>
+            </li>
+</sec:authorize>
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -196,6 +258,7 @@ e.printStackTrace();
             </div>
         </ul>
         <!-- End of Sidebar -->
+       
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -424,7 +487,7 @@ e.printStackTrace();
             <div class="form-group col-md-8">
             <h1 class="h3 mb-0 text-gray-800">Search by day</h1>
           <form class="form-inline" method="post" action="representativeSearchByDay">
-<input type="text" name="date" class="form-control" placeholder="Ex. 2011/02/25">
+<input type="date" name="date" class="form-control" placeholder="Ex. 2021-02-25">
 <button type="submit" name="date" class="btn btn-primary">Search</button>
 </form>
 </div>
@@ -432,8 +495,8 @@ e.printStackTrace();
 
             <h1 class="h3 mb-0 text-gray-800">Search period</h1>
           <form class="form-inline" method="post" action="search2">
-<input type="text" name="date" class="form-control" placeholder="Ex. 2011/02/24">
-<input type="text" name="date2" class="form-control" placeholder="Ex. 2011/02/29">
+<input type="date" name="date" class="form-control" placeholder="Ex. 2011-02-24">
+<input type="date" name="date2" class="form-control" placeholder="Ex. 2011-02-29">
 <button type="submit" name="date" class="btn btn-primary">Search</button>
 </form>
 </div>
@@ -444,12 +507,14 @@ e.printStackTrace();
                             <tr>
                                 <th>ID</th>
                                 <th>Product</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
                         <tbody>
                            <c:forEach var="product" items="${products.rows}">
                                 <td><c:out value="${product.id}" /></td>
                     <td><c:out value="${product.product}" /></td>
+                    <td><c:out value="${product.price}" /></td>
                             </tr>
                         </tbody>
                            </c:forEach>

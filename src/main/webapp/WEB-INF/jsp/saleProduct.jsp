@@ -1,3 +1,7 @@
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>  
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -34,7 +38,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-                <!-- Sidebar -->
+           <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -63,7 +67,6 @@
                 Interface
             </div>
 
-
             <!-- Nav Item - Utilities Collapse Menu -->
              <sec:authorize access="hasRole('USER')">
             <li class="nav-item">
@@ -77,7 +80,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
-                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
+                         <a class="collapse-item" href="${contextPath}/registerSRepresentatives">Add client</a>
                     </div>
                 </div>
             </li>
@@ -103,7 +106,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage products</h6>
                         <a class="collapse-item" href="${contextPath}/productsData">Products</a>
-
+                        
                         <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
                         <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
                 </div>
@@ -113,11 +116,23 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="chartPie">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Most wanted comparison</span></a>
             </li>
-
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chartLine">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>How are the sales going</span></a>
+            </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chart">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Do we need more items</span></a>
+            </li>
+            
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -131,6 +146,7 @@
             </div>
         </ul>
         <!-- End of Sidebar -->
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -360,9 +376,43 @@
                     	<div class="row">
                                   <div class="form-group col-md-8">
                                 <label for="date" class="col-form-label">Date</label> 
-                                <input type="text" field="date" name="date" class="form-control" 
-                                            id="firstName" value="0" required/>
+                                <input type="date" field="date" name="date" class="form-control" 
+                                            id="firstName" value="2021/02/05" required/>
                                             </div>
+                                             <input list="representatives" name="representatives">
+  <datalist id="representatives">
+                                            <% 
+ try
+{
+Class.forName("org.h2.Driver").newInstance();
+Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
+Statement st=con.createStatement();
+String username = request.getUserPrincipal().getName();
+System.out.println("Username is " + username);
+String date=request.getParameter("date");
+String date2=request.getParameter("date2");
+System.out.println(date);
+System.out.println(date2);
+//String strQuery = "select * from sold_product where date='" + date +"' ";
+String strQuery = "select * from client  where representative='" +username+"' ";
+//String strQuery = "select * from sold_product where id=1";
+ResultSet rs = st.executeQuery(strQuery);
+String Countrow="";
+
+while(rs.next()){
+Countrow = rs.getString(1);
+//out.println("Number of sold products: " +Countrow);
+%>
+    <option value=<%=rs.getString("id") %>>
+
+<%
+}
+}
+catch (Exception e){
+e.printStackTrace();
+}
+%>
+  </datalist>
                    <div class="form-group col-md-8">
 <input type="hidden" name="hide" field="id" value="info">
 

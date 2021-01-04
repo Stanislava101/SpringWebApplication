@@ -39,67 +39,11 @@ pageEncoding="ISO-8859-1"%>
 <link href="${contextPath}/resources/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
-
 <body id="page-top">
-<sql:setDataSource
-        var="myDS"
-        driver="org.h2.Driver"
-        url="jdbc:h2:mem:ecommerce"
-        user="root" password="rootsa"
-    />
-    
-     
-    <sql:query var="products"   dataSource="${myDS}">
-        SELECT * FROM sold_product;
-    </sql:query>
-    
-    <%
-try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String strQuery = "SELECT COUNT(*) FROM sold_product";
-ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-while(rs.next()){
-Countrow = rs.getString(1);
-out.println("Number of sold products: " +Countrow);
-}
-}
-catch (Exception e){
-e.printStackTrace();
-}
-%>
-<%
-try
-{
-	Class.forName("org.h2.Driver").newInstance();
-	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sold_product";
-
-
-ResultSet rs = st.executeQuery(strQuery);
-double Countrun=0;
-//out.println("Profit : " + profit);
-while(rs.next()){
-Countrun = rs.getDouble(1);
-double profit = Countrun- (0.2+0.3); //dds + sebestoinost
-double roundProfit = (double) Math.round(profit * 100) / 100;
-double roundTurnover = (double) Math.round(Countrun * 100) / 100;
-out.println("Turnover :" + roundTurnover);
-out.println("Profit :" + roundProfit);
-}
-}
-catch (Exception e){
-e.printStackTrace();
-}
-%>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-               <!-- Sidebar -->
+           <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -127,7 +71,15 @@ e.printStackTrace();
             <div class="sidebar-heading">
                 Interface
             </div>
-
+ <sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="${contextPath}/srepresentativesData">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Sales representatives</span>
+                </a>
+            </li>
+            </sec:authorize>
 
             <!-- Nav Item - Utilities Collapse Menu -->
              <sec:authorize access="hasRole('USER')">
@@ -142,7 +94,7 @@ e.printStackTrace();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
-                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
+                         <a class="collapse-item" href="${contextPath}/registerSRepresentatives">Add client</a>
                     </div>
                 </div>
             </li>
@@ -168,21 +120,71 @@ e.printStackTrace();
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage products</h6>
                         <a class="collapse-item" href="${contextPath}/productsData">Products</a>
-
+                        
                         <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
                         <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
                 </div>
             </li>
 </sec:authorize>
 
-
+<sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Manage profile</span>
+                </a>
+                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Login Screens:</h6>
+                        <a class="collapse-item" href="login">Login</a>
+                        <a class="collapse-item" href="registration">Register</a>
+                    </div>
+                </div>
+            </li>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                <a class="nav-link" href="adminSalesData">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Catalog</span></a>
             </li>
-
+                        <li class="nav-item">
+                <a class="nav-link" href="searchBySalesRepresentative">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Search by representative</span></a>
+            </li>
+</sec:authorize>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chartPie">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Most wanted comparison</span></a>
+            </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chartLine">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>How are the sales going</span></a>
+            </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chart">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Do we need more items</span></a>
+            </li>
+            
+            
+            
+ <sec:authorize access="hasRole('ADMIN')">
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="${contextPath}/productsDataList">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Products</span></a>
+            </li>
+</sec:authorize>
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -196,6 +198,7 @@ e.printStackTrace();
             </div>
         </ul>
         <!-- End of Sidebar -->
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -419,31 +422,15 @@ e.printStackTrace();
                     <!-- Content Row -->
                     <div class="row">
 
- <sec:authorize access="hasRole('USER')">
+ <sec:authorize access="hasRole('ADMIN')">
  <div class="row">
             <div class="form-group col-md-8">
             <h1 class="h3 mb-0 text-gray-800">Search by day</h1>
           <form class="form-inline" method="post" action="searchResults">
-<input type="text" name="date" class="form-control" placeholder="Ex. admin7">
-<button type="submit" name="date" class="btn btn-primary">Search</button>
+<input type="text" name="representative" class="form-control" placeholder="Ex. admin7">
+<button type="submit" name="representative" class="btn btn-primary">Search</button>
 </form>
 </div>
-    
-                    <table class="table table-striped table-responsive-md">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Product</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                           <c:forEach var="product" items="${products.rows}">
-                                <td><c:out value="${product.id}" /></td>
-                    <td><c:out value="${product.product}" /></td>
-                            </tr>
-                        </tbody>
-                           </c:forEach>
-                    </table>
                     </sec:authorize>
     </div></div></div>
                             </div>

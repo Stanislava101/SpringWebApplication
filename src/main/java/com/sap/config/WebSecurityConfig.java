@@ -36,6 +36,8 @@ import com.sap.service.UserDetailsServiceImpl;
 import com.sap.service.UserService;
 import com.sap.service.UserServiceImpl;
 import com.sap.validator.ClientValidator;
+import com.sap.validator.ProductValidator;
+
 import com.sap.validator.UserValidator;
 import com.sap.service.ProductService;
 import com.sap.web.UserController;
@@ -72,8 +74,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
-    public ProductService productService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository, UserRepository userRepository) {
-    	return new ProductService(repository, spRepository,salesRepository, userRepository);
+    public ProductService productService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository, UserRepository userRepository, ClientRepository clRepository) {
+    	return new ProductService(repository, spRepository,salesRepository, userRepository, clRepository);
     }
     
     @Bean
@@ -82,8 +84,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
-    public ClientService clientService(ClientRepository repository) {
-    	return new ClientService(repository);
+    public ClientService clientService(ClientRepository repository, SalesRepository slRepository) {
+    	return new ClientService(repository, slRepository);
     }
     
     @Bean
@@ -91,6 +93,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	return new ClientValidator(userService);
     }
     
+    @Bean
+    public ProductValidator setPValidator(ProductService pService) {
+    	return new ProductValidator(pService);
+    }
    // @Bean
    // public SendEmailService emailService(JavaMailSender javaMailSender) {
    // 	return new SendEmailService(javaMailSender);
@@ -101,7 +107,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/resources/**", "/login").permitAll()
-                    .antMatchers("/").permitAll()
+                    .antMatchers("/resources/**", "/index").permitAll()
                     .antMatchers("/h2-console/**").permitAll()
 
                     .antMatchers("/registration/**").hasRole("ADMIN")

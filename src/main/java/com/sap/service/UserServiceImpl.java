@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 	
 	
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder){
-  //  	roleRepository.save(new Role("ROLE_USER"));
+
     	this.userRepository=userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-	//	user.setRoles(new HashSet<>(roleRepository.findAll()));
 		Role role = roleRepository.findByName("ROLE_ADMIN");
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);
@@ -54,17 +53,6 @@ public class UserServiceImpl implements UserService {
 	}
 
 
-	/*
-	public String smth(User user) {
-		String m = "";
-		String reply = user.getName();
-		if(reply.equals("ROLE_USER")) {
-			m="ROLE_USER";
-		}else if(reply.equals("ROLE_ADMIN")) {
-			 m = "ROLE_ADMIN";
-	}
-		return reply;
-	}
-	*/
+
 
 }

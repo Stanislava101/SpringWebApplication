@@ -12,12 +12,21 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
 import com.sap.model.Role;
+import com.sap.model.Sales;
 import com.sap.repository.ClientRepository;
 import com.sap.repository.RoleRepository;
+import com.sap.repository.SalesRepository;
 
 
 public class ClientService {
 	ClientRepository repository;
+	
+	SalesRepository slRepository;
+	public static String s;
+	
+	public static String phoneNumber;
+	
+	public static String name;
 	
 	public long ID;
 	
@@ -25,8 +34,9 @@ public class ClientService {
 
 	}
 	
-	public ClientService(ClientRepository repository) {
+	public ClientService(ClientRepository repository, SalesRepository slRepository) {
 		this.repository=repository;
+		this.slRepository=slRepository;
 	}
 	
 	public List<Client> getAllClients()
@@ -59,6 +69,10 @@ public class ClientService {
 		String username = loggedInUser.getName();
 		entity.setId(ID);
 		entity.setRepresentative(username);
+		 s = entity.getEmail();
+		 phoneNumber = entity.getPhoneNumber();
+		 name = entity.getName();
+		System.out.println("------------------------------------ " + s);
 		ID=0;
 		if(entity.getId()  == null) 
 		{
@@ -81,7 +95,7 @@ public class ClientService {
 
 				return newEntity;
 			} else {
-				entity = repository.save(entity);
+		//		entity = repository.save(entity);
 			}
 		}
 	
@@ -97,6 +111,20 @@ public class ClientService {
 		if(product.isPresent()) 
 		{
 			repository.deleteById(id);
+		} else {
+			throw new RecordNotFoundException("No record exist for given id");
+		}
+	} 
+	
+	public void deleteSaleById(Long id) throws RecordNotFoundException 
+	{
+		System.out.println("deleteSaleById");
+		
+		Optional<Sales> product = slRepository.findById(id);
+		
+		if(product.isPresent()) 
+		{
+			slRepository.deleteById(id);
 		} else {
 			throw new RecordNotFoundException("No record exist for given id");
 		}

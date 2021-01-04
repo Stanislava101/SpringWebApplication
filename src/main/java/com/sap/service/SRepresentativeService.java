@@ -24,10 +24,9 @@ public class SRepresentativeService implements SRepresentativeService2 {
 	RoleRepository roleRepository;
 	UserRepository userRepository;
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	public long ID;
+	private long ID;
 	
 	public SRepresentativeService(SRepresentativeRepository repository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
-	//	roleRepository.save(new Role("ROLE_USERX"));
 		this.repository=repository;
 		this.roleRepository = roleRepository;
 		this.bCryptPasswordEncoder =bCryptPasswordEncoder;
@@ -84,13 +83,10 @@ public class SRepresentativeService implements SRepresentativeService2 {
 				User newEntity = product.get();
 				newEntity.setUsername(entity.getUsername());
 				newEntity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
-			//	newEntity.setPassword(entity.getPassword());
-				//newEntity.setPassword(entity.getPassword());
 				newEntity = repository.save(newEntity);
 
 				return newEntity;
 			} else {
-				//entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
 				entity.setPassword(entity.getPassword());
 				entity = repository.save(entity);
 			}
@@ -116,7 +112,6 @@ public class SRepresentativeService implements SRepresentativeService2 {
 	@Override
 	public void save(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-	//	user.setRoles(new HashSet<>(roleRepository.findAll()));
 		Role role = roleRepository.findByName("ROLE_USER");
 		Set<Role> roles = new HashSet<>();
 		roles.add(role);

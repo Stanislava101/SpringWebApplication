@@ -34,7 +34,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-                <!-- Sidebar -->
+      <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -62,15 +62,6 @@
             <div class="sidebar-heading">
                 Interface
             </div>
- <sec:authorize access="hasRole('ADMIN')">
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="${contextPath}/srepresentativesData">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Sales representatives</span>
-                </a>
-            </li>
-            </sec:authorize>
 
             <!-- Nav Item - Utilities Collapse Menu -->
              <sec:authorize access="hasRole('USER')">
@@ -85,7 +76,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
-                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
+                         <a class="collapse-item" href="${contextPath}/registerSRepresentatives">Add client</a>
                     </div>
                 </div>
             </li>
@@ -111,21 +102,32 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage products</h6>
                         <a class="collapse-item" href="${contextPath}/productsData">Products</a>
-
+                        
                         <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
                         <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
                 </div>
             </li>
 </sec:authorize>
 
-
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="chartPie">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Most wanted comparison</span></a>
             </li>
-
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chartLine">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>How are the sales going</span></a>
+            </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chart">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Do we need more items</span></a>
+            </li>
+            
 
         <form id="logoutForm" method="POST" action="${contextPath}/logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -139,6 +141,7 @@
             </div>
         </ul>
         <!-- End of Sidebar -->
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -363,14 +366,13 @@
                     <div class="row">
 
  <sec:authorize access="hasRole('USER')">
-
-             <form action="/createPromotion" method="post">
+     <form action="/createPromotion" method="post">
                     	<div class="row">
                             <div class="form-group col-md-8">
                                   <div class="form-group col-md-8">
                                 <label for="price" class="col-form-label">Promotion</label> 
-                                <input type="text" field="promotion" name="promotion" class="form-control" 
-                                            id="firstName" value="0" required/>
+                                <input type="number" field="promotion" name="promotion" class="form-control" 
+                                         min="0" step="any"   id="firstName" value="0" required/>
                             </div>
 <div class="form-group col-md-8">
 <input type="hidden" name="hide" field="id" value="info">

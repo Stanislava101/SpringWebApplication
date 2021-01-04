@@ -35,12 +35,7 @@
             </div>
         </spring:bind>
         </div>
-                <spring:bind path="name">
-            <div class="form-group">
-                  <form:input type="text" path="name" class="form-input" placeholder="name"
-                            autofocus="true"></form:input>
-            </div>
-        </spring:bind> 
+
         <spring:bind path="password">
          <div class="form-group">
             <div class="form-group ${status.error ? 'has-error' : ''}">

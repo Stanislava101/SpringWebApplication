@@ -432,7 +432,6 @@ String strQuery = "select * from client  where representative='" +username+"' ";
 //String strQuery = "select * from sold_product where id=1";
 ResultSet rs = st.executeQuery(strQuery);
 String Countrow="";
-
 while(rs.next()){
 Countrow = rs.getString(1);
 //out.println("Number of sold products: " +Countrow);

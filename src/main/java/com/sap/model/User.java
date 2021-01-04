@@ -13,7 +13,6 @@ public class User {
     private String username; 
     private String password; 
     private String passwordConfirm; 
-    private String name; //ROLE_ADMIN & ROLE_USER
     private Set<Role> roles;
     RoleRepository roleRepository;
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,14 +38,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
     @Transient
     public String getPasswordConfirm() {

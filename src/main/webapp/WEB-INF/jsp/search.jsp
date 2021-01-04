@@ -55,7 +55,7 @@
     <!-- Page Wrapper -->
     <div id="wrapper">
 
-                <!-- Sidebar -->
+            <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
@@ -106,7 +106,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
-                         <a class="collapse-item" href="${contextPath}/editClient">Add client</a>
+                         <a class="collapse-item" href="${contextPath}/registerSRepresentatives">Add client</a>
                     </div>
                 </div>
             </li>
@@ -132,7 +132,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Manage products</h6>
                         <a class="collapse-item" href="${contextPath}/productsData">Products</a>
-
+                        
                         <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
                         <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
                 </div>
@@ -153,17 +153,42 @@
                         <h6 class="collapse-header">Login Screens:</h6>
                         <a class="collapse-item" href="login">Login</a>
                         <a class="collapse-item" href="registration">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
                     </div>
                 </div>
+            </li>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="adminSalesData">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Catalog</span></a>
+            </li>
+                        <li class="nav-item">
+                <a class="nav-link" href="searchBySalesRepresentative">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Search by representative</span></a>
             </li>
 </sec:authorize>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="chartPie">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Most wanted comparison</span></a>
             </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chartLine">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>How are the sales going</span></a>
+            </li>
+                       <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="chart">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Do we need more items</span></a>
+            </li>
+            
+            
+            
  <sec:authorize access="hasRole('ADMIN')">
             <!-- Nav Item - Tables -->
             <li class="nav-item">
@@ -185,6 +210,7 @@
             </div>
         </ul>
         <!-- End of Sidebar -->
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">

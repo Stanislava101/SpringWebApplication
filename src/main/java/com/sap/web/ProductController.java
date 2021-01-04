@@ -10,23 +10,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sap.exception.RecordNotFoundException;
+import com.sap.model.Client;
 import com.sap.model.Product;
 import com.sap.model.User;
 import com.sap.service.ProductService;
+import com.sap.validator.ProductValidator;
+
 
 @Controller
 public class ProductController {
 	   @Autowired
 	    ProductService service;
-	
+	   
+	   @Autowired
+	    private ProductValidator pValidator;
 
 	   
-	@RequestMapping(path = {"/edit", "/edit/{id}"})
+	@RequestMapping(path = {"/edit/{id}"})
 	public String editProductById(Model model, @PathVariable("id") Optional<Long> id) 
 							throws RecordNotFoundException 
 	{
@@ -43,6 +50,28 @@ public class ProductController {
 		
 		return "add-edit-product";
 	}
+	
+	
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String pForm(Model model) {
+        model.addAttribute("productForm", new Product());
+
+        return "add-edit-product";
+    }
+    
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public String pFormAddData(@ModelAttribute("productForm") Product productForm, BindingResult bindingResult, Model model) {
+        pValidator.validate(productForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "add-edit-product";
+        }
+
+        service.createOrUpdateProduct(productForm);
+
+        return "redirect:/h2-console";
+    }
 	@RequestMapping(path = {"/promotion/{id}"})
 	public String promotionProductById(Model model, @PathVariable("id") Optional<Long> id) 
 							throws RecordNotFoundException 
@@ -59,6 +88,21 @@ public class ProductController {
 		
 		return "add-promotion";
 	}
+	
+    @RequestMapping(value = "/promotion/{id}", method = RequestMethod.GET)
+    public String promotion(Model model,  @PathVariable("id") Optional<Long> id) throws RecordNotFoundException{
+
+	if (id.isPresent()) {
+		Product entity = service.getProductById(id.get());
+		model.addAttribute("product", entity);
+		
+	} else {
+		model.addAttribute("product", new Product());
+	}
+	
+	
+	return "add-promotion";
+}
 	
 	@RequestMapping(path = "/productsData")
 	public String getAllEmployees(Model model) 

@@ -21,6 +21,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -36,10 +37,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.sap.config.MailConfig;
 import com.sap.exception.RecordNotFoundException;
+import com.sap.model.Client;
 import com.sap.model.Product;
 import com.sap.model.Sales;
 import com.sap.model.SoldProduct;
 import com.sap.model.User;
+import com.sap.repository.ClientRepository;
 import com.sap.repository.ProductRepository;
 import com.sap.repository.SalesRepository;
 import com.sap.repository.SoldProductRepository;
@@ -57,6 +60,7 @@ public class ProductService {
 	
 	UserRepository userRepository;
 	
+	ClientRepository clRepository;
 	
 	String to="stanislava1505@gmail.com";
 	String from="writersplaceowner@gmail.com";
@@ -69,11 +73,12 @@ public class ProductService {
 
 	}
 	
-	public ProductService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository, UserRepository userRepository) {
+	public ProductService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository, UserRepository userRepository, ClientRepository clRepository) {
 		this.repository=repository;
 		this.spRepository = spRepository;
 		this.salesRepository = salesRepository;
 		this.userRepository = userRepository;
+		this.clRepository=clRepository;
 	}
 	
 	public List<Product> getAllProducts()
@@ -104,7 +109,6 @@ public class ProductService {
 			Product newEntity = product.get();
 			newEntity.setPromotion(entity.getPromotion());
 			newEntity = repository.save(newEntity);
-
 			return newEntity;
 		}
 		return entity;
@@ -169,15 +173,24 @@ public class ProductService {
 		}
 	} 
 	public void soldProduct(int quantity, String model, double price, String date) {
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
 		if(quantity == 0) {
 			String soldModel = String.valueOf(model);
-			spRepository.save(new SoldProduct(soldModel, price, date,(long)1));
+			spRepository.save(new SoldProduct(soldModel, price, date,username));
 		}
 	}
-
+	
+	
+	@Transactional
 	public void sale(String representativeName, String clientName, String product, Double price, int quantity, String date) {
-			salesRepository.save(new Sales(representativeName, clientName,product, price, quantity,date));
-			
+//		Client cc = new Client(representativeName);
+		Client cc = new Client(ClientService.name,ClientService.s,ClientService.phoneNumber,representativeName);
+		//	Client m=createOrUpdateClient(cc);
+		     //  Sales lisa = new Sales(representativeName,clientName,product, price, quantity, date, new Client(representativeName,"David","213234242"));
+		    //    salesRepository.save(lisa);
+				salesRepository.save(new Sales(representativeName, clientName,product, price, quantity,date,cc));
+				
 	}
 	public void createPromotion(Product entity) {
 		entity.setId(ID);
