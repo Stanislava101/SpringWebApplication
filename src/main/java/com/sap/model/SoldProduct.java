@@ -84,6 +84,6 @@ public class SoldProduct {
 
     @Override
     public String toString() {
-        return "EmployeeEntity [id=" + id + ", product=" + product +  "]";
+        return "Entity [id=" + id + ", product=" + product +  "]";
     }
 }

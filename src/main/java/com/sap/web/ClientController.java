@@ -61,19 +61,17 @@ public class ClientController {
 		return "list-clients";
 	}
 	@RequestMapping(path = "/deleteClient/{id}")
-	public String deleteProductById(Model model, @PathVariable("id") Long id) 
+	public String deleteClientById(Model model, @PathVariable("id") Long id) 
 							throws RecordNotFoundException 
 	{
 		
 		System.out.println("deleteClientById = " + id);
-		
-	//	service.deleteClientById(id);
 		service.deleteSaleById(id);
 		return "redirect:/";
 	}
 
 	@RequestMapping(path = "/createClient", method = RequestMethod.POST)
-	public String createOrUpdateProduct(Client client) 
+	public String createOrUpdateClient(Client client) 
 	{
 		service.createOrUpdateClient(client);
 		return "redirect:/";
@@ -98,6 +96,6 @@ public class ClientController {
 
         service.createOrUpdateClient(userForm2);
 
-        return "redirect:/h2-console";
+        return "redirect:/";
     }
 }

@@ -86,25 +86,10 @@ public class SRepresentativeController {
 
 	        service2.save(userForm);
 
-	        return "redirect:/h2-console";
+	        return "redirect:/";
 	    }
 
 	   
-	
-/*	
-	@RequestMapping(path = "/srepresentativesData")
-	public String getAllSRepresentatives(Model model) 
-	{	
-		System.out.println("getAllSRepresentatives");
-		
-		List<User> list = SRepresentativeService.getAllProducts();
-
-		model.addAttribute("srepresentative", list);
-		
-		return "list-SRepresentative";
-	}
-	*/
-	
 	@RequestMapping(path = "/deleteSR/{id}")
 	public String deleteSRepresentativeById(Model model, @PathVariable("id") Long id) 
 							throws RecordNotFoundException 

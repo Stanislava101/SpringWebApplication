@@ -12,7 +12,20 @@
             <column name="model" value="LG"/>
             <column name="quantity" value="3"/>
             <column name="price" value="5555.55"/>
-            <column name="price" value="0"/>
+        </insert>
+          <insert tableName="product">
+            <column name="id" valueNumeric="2"/>
+            <column name="type" value="Mobile phone"/>
+            <column name="model" value="Samsung"/>
+            <column name="quantity" value="1"/>
+            <column name="price" value="1469.99"/>
+        </insert>
+                  <insert tableName="product">
+            <column name="id" valueNumeric="3"/>
+            <column name="type" value="Monitor"/>
+            <column name="model" value="Samsung"/>
+            <column name="quantity" value="1"/>
+            <column name="price" value="269.99"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

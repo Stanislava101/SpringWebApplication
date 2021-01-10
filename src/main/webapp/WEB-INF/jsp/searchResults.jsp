@@ -435,21 +435,17 @@
                     <div class="row">
 
  <sec:authorize access="hasRole('ADMIN')">
-
-            
-
-    
-                    <table class="table table-striped table-responsive-md">
+                        <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Type</th>
+                                <th>Device</th>
+                                <th>Quantity left</th>
                                 <th>Price</th>
-                                <th>Date</th>
                             </tr>
+                            
                         </thead>
-                        <tbody>
-                          <%
+                        <tbody>  <%
 try
 {
 Class.forName("org.h2.Driver").newInstance();
@@ -461,27 +457,40 @@ System.out.println(representative);
 String strQuery = "select * from sales where REPRESENTATIVE_NAME ='" + representative +"'";
 
 ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-
+if(rs.isBeforeFirst())
+{
 while(rs.next()){
-Countrow = rs.getString(1);
-//out.println("Number of sold products: " +Countrow);
 %>
+<!-- <table class="table table-striped table-responsive-md">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Device</th>
+                                <th>Quantity left</th>
+                                <th>Price</th>
+                            </tr>
+                            
+                        </thead>
+                        <tbody> -->
 <tr>
 <td><%=rs.getString("id") %></td>
 <td><%=rs.getString("product") %></td>
 <td><%=rs.getString("price") %></td>
 <td><%=rs.getString("date") %></td>
 </tr>
-<%
+                        </tbody>
+                        <%}%>
+                    </table>
+                    <%
+} else
+{
+    out.println("The representative doesn't exist or he doesn't have any sales. ");
 }
 }
 catch (Exception e){
 e.printStackTrace();
 }
 %>
-                        </tbody>
-                    </table>
                     </sec:authorize>
     </div></div></div>
                             </div>
@@ -493,16 +502,6 @@ e.printStackTrace();
                 <!-- /.container-fluid -->
 
             </div>
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 

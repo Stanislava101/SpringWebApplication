@@ -49,86 +49,32 @@
       <div class="col-md-6 mt-3 bg-info p-4 rounded">
         <h2 class="bg-light p-2 rounded text-center text-dark">ID : <c:out value="${product.id}" /></h2>
         <div class="text-center">
-          <img src="${contextPath}/resources/img/shoppingItem.jpg" width="300" class="img-thumbnail">
+          <img src="${contextPath}/resources/img/iphone-12.png" width="300" class="img-thumbnail">
         </div>
         <h4 class="text-light">Type : <c:out value="${product.type}" /></h4>
         <h4 class="text-light">Model :<c:out value="${product.model}" /></h4>
-        <h4 class="text-light">Quantity : <c:out value="${product.quantity}" /></h4>
         <h4 class="text-light">Price : <c:out value="${product.price}" /></h4>
-    <!-- I got these buttons from simplesharebuttons.com -->
-    </div>
-    <div id="share-buttons">
-    
-    <!-- Buffer -->
-    <a href="https://bufferapp.com/add?url=https://simplesharebuttons.com&amp;text=Simple Share Buttons" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/buffer.png" alt="Buffer" />
-    </a>
-    
-    <!-- Digg -->
-    <a href="http://www.digg.com/submit?url=https://simplesharebuttons.com" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/diggit.png" alt="Digg" />
-    </a>
-    
+<div id="share-buttons">
+<div align="center">
     <!-- Email -->
-    <a href="mailto:?Subject=Simple Share Buttons&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://simplesharebuttons.com">
+    <a href="mailto:?Subject=TechBuy Products&amp;Body=I want to ask about...">
         <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
     </a>
  
     <!-- Facebook -->
-    <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank">
+    <a href="http://www.facebook.com/sharer.php?u=https://sapecommerce.000webhostapp.com/" target="_blank">
         <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
     </a>
-    
-    <!-- Google+ -->
-    <a href="https://plus.google.com/share?url=https://simplesharebuttons.com" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
-    </a>
-    
-    <!-- LinkedIn -->
-    <a href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://simplesharebuttons.com" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" />
-    </a>
-    
-    <!-- Pinterest -->
-    <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());">
-        <img src="https://simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" />
+       <!-- Twitter -->
+    <a href="https://twitter.com/share?url=https://sapecommerce.000webhostapp.com/&amp;text=TechBuy the best eCommerce for electronic devices&amp;hashtags=TheBestPromotion"" target="_blank">
+        <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
     </a>
     
     <!-- Print -->
     <a href="javascript:;" onclick="window.print()">
         <img src="https://simplesharebuttons.com/images/somacro/print.png" alt="Print" />
     </a>
-    
-    <!-- Reddit -->
-    <a href="http://reddit.com/submit?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
-    </a>
-    
-    <!-- StumbleUpon-->
-    <a href="http://www.stumbleupon.com/submit?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/stumbleupon.png" alt="StumbleUpon" />
-    </a>
-    
-    <!-- Tumblr-->
-    <a href="http://www.tumblr.com/share/link?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/tumblr.png" alt="Tumblr" />
-    </a>
-     
-    <!-- Twitter -->
-    <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
-    </a>
-    
-    <!-- VK -->
-    <a href="http://vkontakte.ru/share.php?url=https://simplesharebuttons.com" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/vk.png" alt="VK" />
-    </a>
-    
-    <!-- Yummly -->
-    <a href="http://www.yummly.com/urb/verify?url=https://simplesharebuttons.com&amp;title=Simple Share Buttons" target="_blank">
-        <img src="https://simplesharebuttons.com/images/somacro/yummly.png" alt="Yummly" />
-    </a>
-
+</div></div></div>
 </div>
   </div>
 </body>

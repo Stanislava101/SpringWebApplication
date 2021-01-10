@@ -61,7 +61,7 @@ Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","roots
 Statement st=con.createStatement();
 String username = request.getUserPrincipal().getName();
 System.out.println("Username is " + username);
-String strQuery = "SELECT COUNT(*) FROM sold_product where REPRESENTATIVE_NAME ='" + username +"'";
+String strQuery = "SELECT COUNT(*) FROM sales where REPRESENTATIVE_NAME ='" + username +"'";
 ResultSet rs = st.executeQuery(strQuery);
 String Countrow="";
 while(rs.next()){
@@ -81,12 +81,11 @@ try
 Statement st=con.createStatement();
 String username = request.getUserPrincipal().getName();
 System.out.println("Username is " + username);
-String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sold_product where REPRESENTATIVE_NAME ='" + username +"'";
+String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sales where REPRESENTATIVE_NAME ='" + username +"'";
 
 
 ResultSet rs = st.executeQuery(strQuery);
 double Countrun=0;
-//out.println("Profit : " + profit);
 while(rs.next()){
 Countrun = rs.getDouble(1);
 double profit = Countrun- (0.2+0.3); //dds + sebestoinost
@@ -487,7 +486,7 @@ e.printStackTrace();
             <div class="form-group col-md-8">
             <h1 class="h3 mb-0 text-gray-800">Search by day</h1>
           <form class="form-inline" method="post" action="representativeSearchByDay">
-<input type="date" name="date" class="form-control" placeholder="Ex. 2021-02-25">
+<input type="date" name="date" class="form-control" placeholder="Ex. 05-15-2020" required>
 <button type="submit" name="date" class="btn btn-primary">Search</button>
 </form>
 </div>
@@ -495,8 +494,8 @@ e.printStackTrace();
 
             <h1 class="h3 mb-0 text-gray-800">Search period</h1>
           <form class="form-inline" method="post" action="search2">
-<input type="date" name="date" class="form-control" placeholder="Ex. 2011-02-24">
-<input type="date" name="date2" class="form-control" placeholder="Ex. 2011-02-29">
+<input type="date" name="date" class="form-control" placeholder="Ex. 05-01-2020" required>
+<input type="date" name="date2" class="form-control" placeholder="Ex. 05-31-2020" required>
 <button type="submit" name="date" class="btn btn-primary">Search</button>
 </form>
 </div>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.sap.exception.ClientNotFoundException;
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
 import com.sap.model.Product;
@@ -70,7 +71,7 @@ public class ProductController {
 
         service.createOrUpdateProduct(productForm);
 
-        return "redirect:/h2-console";
+        return "redirect:/";
     }
 	@RequestMapping(path = {"/promotion/{id}"})
 	public String promotionProductById(Model model, @PathVariable("id") Optional<Long> id) 
@@ -289,24 +290,12 @@ public class ProductController {
 		return "saleProduct";
 	}
 	@RequestMapping(path = "/saleProduct", method = RequestMethod.POST)
-	public String saleProduct(Product product) throws AddressException, MessagingException 
+	public String saleProduct(Product product) throws AddressException, MessagingException, ClientNotFoundException 
 	{
 		service.saleProduct(product);
 		return "redirect:/";
 	}
-	
-	@RequestMapping(path = "/filterData")
-	//public String getFilterData(Model model, @Param("keyword") String keyword) 
-	public String getFilterData(Model model)
-	{	
-		String keyword="TV";
-		List<Product> list = service.listAll(keyword);
 
-		model.addAttribute("products", list);
-		
-		return "filterData";
-	}
-	
 	@RequestMapping(path = {"/view/{id}"})
 	public String viewProduct(Model model, @PathVariable("id") Optional<Long> id) 
 							throws RecordNotFoundException 

@@ -435,20 +435,17 @@
                     <div class="row">
 
  <sec:authorize access="hasRole('USER')">
-
-            
-
-    
-                    <table class="table table-striped table-responsive-md">
+                         <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Type</th>
+                                <th>Device</th>
                                 <th>Quantity left</th>
                                 <th>Price</th>
                             </tr>
+                            
                         </thead>
-                        <tbody>
+                        <tbody> 
                           <%
 try
 {
@@ -465,28 +462,32 @@ System.out.println(date2);
 String strQuery = "select * from sales where date >='" +date +"' AND date<='" + date2 +"' AND REPRESENTATIVE_NAME='" + username +"'";
 //String strQuery = "select * from sold_product where id=1";
 ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-
+if(rs.isBeforeFirst())
+{
 while(rs.next()){
-Countrow = rs.getString(1);
-//out.println("Number of sold products: " +Countrow);
 %>
-<tr>
+                         <tr>
 <td><%=rs.getString("id") %></td>
 <td><%=rs.getString("product") %></td>
 <td><%=rs.getString("quantity") %></td>
 <td><%=rs.getString("price") %></td>
 </tr>
+
+                        </tbody>
+<%}%>
+                    </table>
+
 <%
+} else
+{
+    out.println("There are no sales on this period. ");
 }
 }
 catch (Exception e){
 e.printStackTrace();
 }
 %>
-                        </tbody>
-                    </table>
-                    </sec:authorize>
+                 </sec:authorize>
     </div></div></div>
                             </div>
 
@@ -497,15 +498,6 @@ e.printStackTrace();
                 <!-- /.container-fluid -->
 
             </div>
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->

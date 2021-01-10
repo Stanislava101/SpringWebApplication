@@ -1,6 +1,7 @@
 package com.sap.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.tomcat.util.scan.StandardJarScanner;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -97,10 +98,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public ProductValidator setPValidator(ProductService pService) {
     	return new ProductValidator(pService);
     }
-   // @Bean
-   // public SendEmailService emailService(JavaMailSender javaMailSender) {
-   // 	return new SendEmailService(javaMailSender);
-   // }
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -123,12 +120,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/productsDataList/**").hasRole("ADMIN")
                     .antMatchers("/promotion/**").hasRole("USER")
                     .antMatchers("/view/**").hasRole("USER")
-                    
+                    .antMatchers("/adminSalesData/**").hasRole("ADMIN")
+                    .antMatchers("/adminSearchByPeriod/**").hasRole("ADMIN")
+                    .antMatchers("/productsDataList/**").hasRole("ADMIN")
+                    .antMatchers("/registerSRepresentatives/**").hasRole("USER")
+                    .antMatchers("/representativeSearchByDay/**").hasRole("USER")
+                    .antMatchers("/search/**").hasRole("ADMIN")
+                    .antMatchers("/search2/**").hasRole("USER")
+                    .antMatchers("/searchBySalesRepresentative/**").hasRole("ADMIN")
+                    .antMatchers("/searchResults").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
+                    .and()
+                    .exceptionHandling().accessDeniedPage("/404")
                     .and()
                 .logout()
                     .permitAll();

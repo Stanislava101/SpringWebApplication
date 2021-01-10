@@ -49,7 +49,7 @@
    <p>You are not logged in</p>
 </sec:authorize>
                     <p class="loginhere">
-                        You don't have an account?<a href="${contextPath}/registration" class="loginhere-link"> Sign up</a>
+                       You are a client? See our <a href="${contextPath}/index" class="loginhere-link">website</a>
                     </p>
                 </div>
             </div>

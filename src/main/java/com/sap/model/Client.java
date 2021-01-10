@@ -1,11 +1,14 @@
 package com.sap.model;
 
+import java.util.Set;
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,8 +32,8 @@ public class Client {
     @Column(name="representative")
     private String representative;
     
-    @OneToOne(mappedBy = "husband")
-    private Sales wife;
+    @OneToMany(mappedBy = "client")
+    private Set<Sales> sale;
     
     public Client(){}
     
@@ -82,12 +85,12 @@ public class Client {
 		this.representative = representative;
 	}
 	
-	 public void setWife(Sales wife){
-		    this.wife = wife;
+	 public void setSale(Set<Sales> sale){
+		    this.sale = sale;
 		  }
 		  
-		  public Sales getWife(){
-		    return this.wife;
+		  public Set<Sales> getSale(){
+		    return this.sale;
 		  }
 
 

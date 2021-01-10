@@ -435,27 +435,6 @@
                     <div class="row">
 
  <sec:authorize access="hasRole('USER')">
-
-            
-<%
-try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String username = request.getUserPrincipal().getName();
-System.out.println("Username is " + username);
-String date=request.getParameter("date");
-System.out.println(date);
-String strQuery = "select * from sales where date='" + date +"' AND REPRESENTATIVE_NAME='" + username +"'";
-//String strQuery = "select * from sold_product where id=1";
-ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-
-while(rs.next()){
-Countrow = rs.getString(1);
-%>
-
  <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
@@ -467,16 +446,37 @@ Countrow = rs.getString(1);
                             
                         </thead>
                         <tbody>
+                          <%
+try
+{
+	Class.forName("org.h2.Driver").newInstance();
+	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
+	Statement st=con.createStatement();
+	String username = request.getUserPrincipal().getName();
+	System.out.println("Username is " + username);
+	String date=request.getParameter("date");
+	System.out.println(date);
+	String strQuery = "select * from sales where date='" + date +"' AND REPRESENTATIVE_NAME='" + username +"'";
+	ResultSet rs = st.executeQuery(strQuery);
+	if(rs.isBeforeFirst())
+	{
+while(rs.next()){
+%>
                          <tr>
 <td><%=rs.getString("id") %></td>
 <td><%=rs.getString("product") %></td>
 <td><%=rs.getString("quantity") %></td>
 <td><%=rs.getString("price") %></td>
 </tr>
+
                         </tbody>
+<%}%>
                     </table>
 
 <%
+} else
+{
+    out.println("There are no sales on this day. ");
 }
 }
 catch (Exception e){

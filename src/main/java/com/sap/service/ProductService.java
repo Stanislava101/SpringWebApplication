@@ -1,54 +1,27 @@
 package com.sap.service;
 
-import java.util.ArrayList
-
-
-
-;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;
-
-import javax.mail.Message;
+import java.util.Set;
 import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.event.EventListener;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.sap.config.MailConfig;
+import com.sap.exception.ClientNotFoundException;
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
 import com.sap.model.Product;
 import com.sap.model.Sales;
 import com.sap.model.SoldProduct;
-import com.sap.model.User;
 import com.sap.repository.ClientRepository;
 import com.sap.repository.ProductRepository;
 import com.sap.repository.SalesRepository;
 import com.sap.repository.SoldProductRepository;
 import com.sap.repository.UserRepository;
-import com.sap.web.UserController;
-
 
 public class ProductService {
 
@@ -67,7 +40,7 @@ public class ProductService {
 	String password="korqosnnnzffibhv";
 	
 	
-	public long ID;
+	private long ID;
 	
 	public ProductService() {
 
@@ -102,19 +75,6 @@ public class ProductService {
 			throw new RecordNotFoundException("No record exist for given id");
 		}
 	}
-/*	public Product createPromotion1(Product entity) {
-		Optional<Product> product = repository.findById(entity.getId());
-		if(product.isPresent()) 
-		{
-			Product newEntity = product.get();
-			newEntity.setPromotion(entity.getPromotion());
-			newEntity = repository.save(newEntity);
-			return newEntity;
-		}
-		return entity;
-		
-	}
-	*/
 	public Product createOrUpdateProduct(Product entity) 
 	{
 		System.out.println("createOrUpdateProduct");
@@ -137,13 +97,14 @@ public class ProductService {
 				Product newEntity = product.get();
 				newEntity.setType(entity.getType());
 				newEntity.setModel(entity.getModel());
-				newEntity.setPrice(entity.getPrice());
+				double price = entity.getPrice();
+				DecimalFormat df = new DecimalFormat("#.##");      
+				 price= Double.valueOf(df.format(price));
+				newEntity.setPrice(price);
 				
-				int k = entity.getQuantity();
+				int newQuantity = entity.getQuantity();
 				String pr= entity.getType() + " " + entity.getModel();
-				System.out.println(k);
-				soldProduct(k, pr, entity.getPrice(), entity.getDate());
-				if(k==0) {
+				if(newQuantity==0) {
 					System.out.println("SOLD");
 				}
 				newEntity.setQuantity(entity.getQuantity());
@@ -183,13 +144,15 @@ public class ProductService {
 	
 	
 	@Transactional
-	public void sale(String representativeName, String clientName, String product, Double price, int quantity, String date) {
-//		Client cc = new Client(representativeName);
-		Client cc = new Client(ClientService.name,ClientService.s,ClientService.phoneNumber,representativeName);
-		//	Client m=createOrUpdateClient(cc);
-		     //  Sales lisa = new Sales(representativeName,clientName,product, price, quantity, date, new Client(representativeName,"David","213234242"));
-		    //    salesRepository.save(lisa);
-				salesRepository.save(new Sales(representativeName, clientName,product, price, quantity,date,cc));
+	public void sale(String representativeName, String product, Double price, int quantity, String date) throws ClientNotFoundException {
+		Client cc = new Client(ClientService.name,ClientService.email,ClientService.phoneNumber,representativeName);
+		Sales oneSale = new Sales(cc);
+		Set<Sales> itemsSet = new HashSet<Sales>();
+		if(ClientService.name==null) {	
+			throw new ClientNotFoundException("Enter a client");
+		}
+		itemsSet.add(oneSale);	
+		salesRepository.save(new Sales(representativeName,product, price, quantity,date,cc));
 				
 	}
 	public void createPromotion(Product entity) {
@@ -203,7 +166,8 @@ public class ProductService {
 			newEntity = repository.save(newEntity);
 			double finalPrice = newEntity.getPromotion()*newEntity.getPrice();
 			double finalPrice2 = newEntity.getPrice()-finalPrice;
-			System.out.println(finalPrice2);
+			DecimalFormat df = new DecimalFormat("#.##");      
+			 finalPrice2= Double.valueOf(df.format(finalPrice2));
 			newEntity.setPrice(finalPrice2);
 			newEntity = repository.save(newEntity);
 		}
@@ -211,7 +175,7 @@ public class ProductService {
 		
 	}
 
-	public void saleProduct(Product entity) throws AddressException, MessagingException {
+	public void saleProduct(Product entity) throws AddressException, MessagingException, ClientNotFoundException {
 		entity.setId(ID);
 		ID=0;
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
@@ -219,30 +183,23 @@ public class ProductService {
 
 		Optional<Product> product = repository.findById(entity.getId());
 		System.out.println("User id is = " + username);
-	//	Optional<User> user = userRepository.findById((long)1);
-	//	User us = user.get();
-	//	System.out.println("User id is " + us.getId());
-	//	System.out.println("User username" + us.getUsername());
 		if(product.isPresent()) 
 		{
 			Product newEntity = product.get();
-			int kl = newEntity.getQuantity();
-			System.out.println(kl);
-			int fl = kl-1;
+			int quantity = newEntity.getQuantity();
+			int quantityResult = quantity-1;
 			MailService sendEmail = new MailService();
-			if(fl>=0) {
-			newEntity.setQuantity(fl);
+			String productData = newEntity.getType() + " " + newEntity.getModel();
+			if(quantityResult>=0) {
+			newEntity.setQuantity(quantityResult);
 			newEntity.setDate(entity.getDate());
-			//newEntity.setDate(entity.getDate());
-			soldProduct(fl,newEntity.getModel(), newEntity.getPrice(), newEntity.getDate());
-			sale(username,"ew",newEntity.getModel(),newEntity.getPrice(), newEntity.getQuantity(),newEntity.getDate());
-			//	topSoldProducts(newEntity);
-		//	sendEmail.getMailProperties();
-			if(fl<0) {
+			soldProduct(quantityResult,productData, newEntity.getPrice(), newEntity.getDate());
+			sale(username,productData,newEntity.getPrice(), newEntity.getQuantity(),newEntity.getDate());
+			sendEmail.getMailProperties();
+			if(quantityResult<0) {
 				newEntity.setQuantity(0);
 				sendEmail.getMailProperties();
 			}
-			//newEntity.setDate(entity.getDate());
 			System.out.println(newEntity.getDate());
 			System.out.println(newEntity.getQuantity());
 			}
@@ -250,14 +207,4 @@ public class ProductService {
 		}
 		
 	}
-
-	
-	public List<Product> listAll(String keyword) {
-        if (keyword != null) {
-            return repository.findAll(keyword);
-        }
-        return repository.findAll();
-    }
-	
-	
 }

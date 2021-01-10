@@ -59,7 +59,7 @@ public class UserController {
 
         userService.save(userForm);
 
-        return "redirect:/h2-console";
+        return "redirect:/";
     }
 
 

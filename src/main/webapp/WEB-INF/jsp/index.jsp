@@ -116,9 +116,9 @@
                             <p>The best tech shop.
                                 <br> Share us on social media and get 30% promotion.</p>
                             <a class="buynow" href="${contextPath}/login">Buy Now</a>
-                            <ul class="social_icon">
-                                <li> <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com"><i class="fa fa-facebook-f"></i></a></li>
-                                <li> <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons"><i class="fa fa-twitter"></i></a></li>
+   <ul class="social_icon">
+                                <li> <a href="http://www.facebook.com/sharer.php?u=https://sapecommerce.000webhostapp.com/"><i class="fa fa-facebook-f"></i></a></li>
+                               <li><a href="https://twitter.com/share?url=https://sapecommerce.000webhostapp.com/&amp;text=TechBuy the best eCommerce for electronic devices&amp;hashtags=OurNewOffers"><i class="fa fa-twitter"></i></a></li>								
                             </ul>
                         </div>
                     </div>
@@ -403,13 +403,10 @@ A fast-growing company based in Sofia, which is full of offers for all kinds of 
                                 <p>(+359) 885651213
                                     <br>writersplaceowner@gmail.com</p>
                             </div>
-                            <ul class="location_icon">
-                                <li> <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com"><i class="fa fa-facebook-f"></i></a></li>
-                                <li> <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons"><i class="fa fa-twitter"></i></a></li>
-                                <li> <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com"><i class="fa fa-facebook-f"></i></a></li>
-                                <li> <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons"><i class="fa fa-twitter"></i></a></li>
-                
-
+   <ul class="location_icon">
+                                <li> <a href="http://www.facebook.com/sharer.php?u=https://sapecommerce.000webhostapp.com/"><i class="fa fa-facebook-f"></i></a></li>
+                                <li><a href="https://twitter.com/share?url=https://sapecommerce.000webhostapp.com/&amp;text=TechBuy the best eCommerce for electronic devices&amp;hashtags=OurNewOffers"><i class="fa fa-twitter"></i></a></li>
+								
                             </ul>
                             <div class="menu-bottom">
                                 <ul class="link">

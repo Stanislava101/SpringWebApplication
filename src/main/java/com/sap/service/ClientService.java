@@ -22,13 +22,13 @@ public class ClientService {
 	ClientRepository repository;
 	
 	SalesRepository slRepository;
-	public static String s;
+	protected static String email;
 	
-	public static String phoneNumber;
+	protected static String phoneNumber;
 	
-	public static String name;
+	protected static String name;
 	
-	public long ID;
+	private long ID;
 	
 	public ClientService() {
 
@@ -69,10 +69,9 @@ public class ClientService {
 		String username = loggedInUser.getName();
 		entity.setId(ID);
 		entity.setRepresentative(username);
-		 s = entity.getEmail();
+		 email = entity.getEmail();
 		 phoneNumber = entity.getPhoneNumber();
 		 name = entity.getName();
-		System.out.println("------------------------------------ " + s);
 		ID=0;
 		if(entity.getId()  == null) 
 		{

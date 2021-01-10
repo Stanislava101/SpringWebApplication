@@ -364,7 +364,7 @@
                     <!-- Page Heading -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Manage Promotions</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Manage Products</h1>
                     </div>
 
                     <!-- Content Row -->
@@ -379,40 +379,6 @@
                                 <input type="date" field="date" name="date" class="form-control" 
                                             id="firstName" value="2021/02/05" required/>
                                             </div>
-                                             <input list="representatives" name="representatives">
-  <datalist id="representatives">
-                                            <% 
- try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String username = request.getUserPrincipal().getName();
-System.out.println("Username is " + username);
-String date=request.getParameter("date");
-String date2=request.getParameter("date2");
-System.out.println(date);
-System.out.println(date2);
-//String strQuery = "select * from sold_product where date='" + date +"' ";
-String strQuery = "select * from client  where representative='" +username+"' ";
-//String strQuery = "select * from sold_product where id=1";
-ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-
-while(rs.next()){
-Countrow = rs.getString(1);
-//out.println("Number of sold products: " +Countrow);
-%>
-    <option value=<%=rs.getString("id") %>>
-
-<%
-}
-}
-catch (Exception e){
-e.printStackTrace();
-}
-%>
-  </datalist>
                    <div class="form-group col-md-8">
 <input type="hidden" name="hide" field="id" value="info">
 

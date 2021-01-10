@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
 @Entity
@@ -91,7 +90,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "EmployeeEntity [id=" + id + ", type=" + type + 
+        return "Entity [id=" + id + ", type=" + type + 
                 ", model=" + model +"quantity= " + quantity  + ",promotion = " + promotion  + "]";
     }
 }

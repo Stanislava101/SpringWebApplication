@@ -2,8 +2,6 @@ package com.sap.model;
 
 import javax.persistence.*;
 
-import com.sap.repository.RoleRepository;
-
 import java.util.Set;
 
 @Entity

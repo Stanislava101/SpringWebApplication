@@ -51,8 +51,8 @@ public class MailService {
 		    	MimeMessage message = new MimeMessage(session);
 		    	message.setFrom(new InternetAddress(from));
 		    	message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-		    	message.setSubject("Nothing Special..");
-		    	message.setText("Send Mail By Java Programmm....");
+		    	message.setSubject("New sale");
+		    	message.setText("Alert from dashboard. There was a new sale.");
 
 		    	//send message
 		    	Transport.send(message);

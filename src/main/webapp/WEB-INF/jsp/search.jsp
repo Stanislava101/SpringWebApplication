@@ -435,26 +435,6 @@
                     <div class="row">
 
  <sec:authorize access="hasRole('ADMIN')">
-
-            
-<%
-try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String date=request.getParameter("date");
-System.out.println(date);
-String strQuery = "select * from sales where date='" + date +"' ";
-//String strQuery = "select * from sold_product where id=1";
-ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-
-while(rs.next()){
-Countrow = rs.getString(1);
-out.println("Number of sold products: " +Countrow);
-%>
-
  <table class="table table-striped table-responsive-md">
                         <thead>
                             <tr>
@@ -466,16 +446,35 @@ out.println("Number of sold products: " +Countrow);
                             
                         </thead>
                         <tbody>
+                          <%
+try
+{
+	Class.forName("org.h2.Driver").newInstance();
+	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
+	Statement st=con.createStatement();
+	String date=request.getParameter("date");
+	System.out.println(date);
+	String strQuery = "select * from sales where date='" + date +"' ";
+	ResultSet rs = st.executeQuery(strQuery);
+	if(rs.isBeforeFirst())
+	{
+while(rs.next()){
+%>
                          <tr>
 <td><%=rs.getString("id") %></td>
 <td><%=rs.getString("product") %></td>
 <td><%=rs.getString("quantity") %></td>
 <td><%=rs.getString("price") %></td>
 </tr>
+
                         </tbody>
+<%}%>
                     </table>
 
 <%
+} else
+{
+    out.println("There are no sales on this day. ");
 }
 }
 catch (Exception e){
@@ -493,16 +492,6 @@ e.printStackTrace();
                 <!-- /.container-fluid -->
 
             </div>
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 

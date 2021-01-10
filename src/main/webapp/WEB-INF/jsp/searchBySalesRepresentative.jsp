@@ -427,7 +427,7 @@ pageEncoding="ISO-8859-1"%>
             <div class="form-group col-md-8">
             <h1 class="h3 mb-0 text-gray-800">Search by day</h1>
           <form class="form-inline" method="post" action="searchResults">
-<input type="text" name="representative" class="form-control" placeholder="Ex. admin7">
+<input type="text" name="representative" class="form-control" placeholder="Ex. admin7" required>
 <button type="submit" name="representative" class="btn btn-primary">Search</button>
 </form>
 </div>
@@ -442,16 +442,6 @@ pageEncoding="ISO-8859-1"%>
                 <!-- /.container-fluid -->
 
             </div>
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 

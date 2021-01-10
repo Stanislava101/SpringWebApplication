@@ -59,7 +59,7 @@ try
 Class.forName("org.h2.Driver").newInstance();
 Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
 Statement st=con.createStatement();
-String strQuery = "SELECT COUNT(*) FROM sold_product";
+String strQuery = "SELECT COUNT(*) FROM sales";
 ResultSet rs = st.executeQuery(strQuery);
 String Countrow="";
 while(rs.next()){
@@ -77,12 +77,11 @@ try
 	Class.forName("org.h2.Driver").newInstance();
 	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
 Statement st=con.createStatement();
-String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sold_product";
+String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sales";
 
 
 ResultSet rs = st.executeQuery(strQuery);
 double Countrun=0;
-//out.println("Profit : " + profit);
 while(rs.next()){
 Countrun = rs.getDouble(1);
 double profit = Countrun- (0.2+0.3); //dds + sebestoinost
@@ -483,7 +482,7 @@ e.printStackTrace();
             <div class="form-group col-md-8">
             <h1 class="h3 mb-0 text-gray-800">Search by day</h1>
           <form class="form-inline" method="post" action="search">
-<input type="text" name="date" class="form-control" placeholder="Ex. 2011/02/25">
+<input type="date" name="date" class="form-control" placeholder="Ex. 2021-02-25" required>
 <button type="submit" name="date" class="btn btn-primary">Search</button>
 </form>
 </div>
@@ -491,8 +490,8 @@ e.printStackTrace();
 
             <h1 class="h3 mb-0 text-gray-800">Search period</h1>
           <form class="form-inline" method="post" action="adminSearchByPeriod">
-<input type="date" name="date" class="form-control" placeholder="Ex. 2011-02-24">
-<input type="date" name="date2" class="form-control" placeholder="Ex. 2011-02-29">
+<input type="date" name="date" class="form-control" placeholder="Ex. 2011-02-24" required>
+<input type="date" name="date2" class="form-control" placeholder="Ex. 2011-02-29" required>
 <button type="submit" name="date" class="btn btn-primary">Search</button>
 </form>
 </div>
