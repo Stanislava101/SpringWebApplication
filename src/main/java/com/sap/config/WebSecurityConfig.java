@@ -1,18 +1,9 @@
 package com.sap.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.apache.tomcat.util.scan.StandardJarScanner;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,9 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import com.sap.model.Role;
-import com.sap.model.User;
 import com.sap.repository.ClientRepository;
 import com.sap.repository.ProductRepository;
 import com.sap.repository.RoleRepository;
@@ -33,19 +21,13 @@ import com.sap.repository.UserRepository;
 import com.sap.service.ClientService;
 import com.sap.service.ProductService;
 import com.sap.service.SRepresentativeService;
+import com.sap.service.SaleService;
 import com.sap.service.UserDetailsServiceImpl;
 import com.sap.service.UserService;
 import com.sap.service.UserServiceImpl;
 import com.sap.validator.ClientValidator;
 import com.sap.validator.ProductValidator;
-
 import com.sap.validator.UserValidator;
-import com.sap.service.ProductService;
-import com.sap.web.UserController;
-
-import org.apache.catalina.Context;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint; 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
@@ -77,6 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public ProductService productService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository, UserRepository userRepository, ClientRepository clRepository) {
     	return new ProductService(repository, spRepository,salesRepository, userRepository, clRepository);
+    }
+    
+    @Bean
+    public SaleService saleService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository) {
+    	return new SaleService(repository,spRepository,salesRepository);
     }
     
     @Bean

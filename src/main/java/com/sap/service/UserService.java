@@ -1,6 +1,5 @@
 package com.sap.service;
 
-import com.sap.model.Role;
 import com.sap.model.User;
 
 public interface UserService {

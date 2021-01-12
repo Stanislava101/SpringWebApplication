@@ -1,12 +1,9 @@
 package com.sap.validator;
 
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import com.sap.model.Product;
 import com.sap.service.ProductService;
-import com.sap.service.UserService;
-
 public class ProductValidator implements Validator {
 	private ProductService pService;
     public ProductValidator(ProductService pService) {

@@ -1,38 +1,24 @@
 package com.sap.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Client;
-import com.sap.model.Role;
 import com.sap.model.Sales;
 import com.sap.repository.ClientRepository;
-import com.sap.repository.RoleRepository;
 import com.sap.repository.SalesRepository;
 
 
 public class ClientService {
 	ClientRepository repository;
-	
 	SalesRepository slRepository;
 	protected static String email;
-	
 	protected static String phoneNumber;
-	
 	protected static String name;
-	
 	private long ID;
-	
-	public ClientService() {
-
-	}
 	
 	public ClientService(ClientRepository repository, SalesRepository slRepository) {
 		this.repository=repository;

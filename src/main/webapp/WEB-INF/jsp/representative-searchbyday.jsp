@@ -440,7 +440,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Device</th>
-                                <th>Quantity left</th>
                                 <th>Price</th>
                             </tr>
                             
@@ -465,7 +464,6 @@ while(rs.next()){
                          <tr>
 <td><%=rs.getString("id") %></td>
 <td><%=rs.getString("product") %></td>
-<td><%=rs.getString("quantity") %></td>
 <td><%=rs.getString("price") %></td>
 </tr>
 
@@ -494,15 +492,6 @@ e.printStackTrace();
                 <!-- /.container-fluid -->
 
             </div>
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->

@@ -56,10 +56,6 @@ public class Sales {
     
     public Sales(String representativeName, Client client) {
     	this.representativeName=representativeName;
-    	this.product=product;
-    	this.price=price;
-    	this.quantity=quantity;
-    	this.date = date;
     	this.client=client;
     }
     

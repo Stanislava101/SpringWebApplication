@@ -372,7 +372,7 @@
                                   <div class="form-group col-md-8">
                                 <label for="price" class="col-form-label">Promotion</label> 
                                 <input type="number" field="promotion" name="promotion" class="form-control" 
-                                         min="0" step="any"   id="firstName" value="0" required/>
+                                         min="0" step="any" value="0" required/>
                             </div>
 <div class="form-group col-md-8">
 <input type="hidden" name="hide" field="id" value="info">

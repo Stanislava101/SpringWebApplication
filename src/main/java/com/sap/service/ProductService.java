@@ -2,21 +2,17 @@ package com.sap.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.sap.exception.ClientNotFoundException;
 import com.sap.exception.RecordNotFoundException;
-import com.sap.model.Client;
 import com.sap.model.Product;
-import com.sap.model.Sales;
-import com.sap.model.SoldProduct;
 import com.sap.repository.ClientRepository;
 import com.sap.repository.ProductRepository;
 import com.sap.repository.SalesRepository;
@@ -26,25 +22,12 @@ import com.sap.repository.UserRepository;
 public class ProductService {
 
 	ProductRepository repository;
-	
 	SoldProductRepository spRepository;
-	
 	SalesRepository salesRepository;
-	
 	UserRepository userRepository;
-	
 	ClientRepository clRepository;
-	
-	String to="stanislava1505@gmail.com";
-	String from="writersplaceowner@gmail.com";
-	String password="korqosnnnzffibhv";
-	
-	
+	SaleService saleService;
 	private long ID;
-	
-	public ProductService() {
-
-	}
 	
 	public ProductService(ProductRepository repository, SoldProductRepository spRepository, SalesRepository salesRepository, UserRepository userRepository, ClientRepository clRepository) {
 		this.repository=repository;
@@ -133,27 +116,38 @@ public class ProductService {
 			throw new RecordNotFoundException("No record exist for given id");
 		}
 	} 
-	public void soldProduct(int quantity, String model, double price, String date) {
+	public void saleProduct(Product entity) throws AddressException, MessagingException, ClientNotFoundException {
+		entity.setId(ID);
+		ID=0;
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = loggedInUser.getName();
-		if(quantity == 0) {
-			String soldModel = String.valueOf(model);
-			spRepository.save(new SoldProduct(soldModel, price, date,username));
+		saleService = new SaleService(repository,spRepository,salesRepository);
+
+		Optional<Product> product = repository.findById(entity.getId());
+		System.out.println("User id is = " + username);
+		if(product.isPresent()) 
+		{
+			Product newEntity = product.get();
+			int quantity = newEntity.getQuantity();
+			saleService.checkIfClientExist();
+			int quantityResult = quantity-1;
+			MailService sendEmail = new MailService();
+			String productData = newEntity.getType() + " " + newEntity.getModel();
+			if(quantityResult>=0) {
+			newEntity.setQuantity(quantityResult);
+			newEntity.setDate(entity.getDate());
+			saleService.soldProduct(quantityResult,productData, newEntity.getPrice(), newEntity.getDate());
+			saleService.sale(username,productData,newEntity.getPrice(),newEntity.getDate());
+			sendEmail.getMailProperties();
+			if(quantityResult<0) {
+				newEntity.setQuantity(0);
+			//	sendEmail.getMailProperties();
+			}
+			System.out.println(newEntity.getDate());
+			System.out.println(newEntity.getQuantity());
+			}
+			newEntity = repository.save(newEntity);
 		}
-	}
-	
-	
-	@Transactional
-	public void sale(String representativeName, String product, Double price, int quantity, String date) throws ClientNotFoundException {
-		Client cc = new Client(ClientService.name,ClientService.email,ClientService.phoneNumber,representativeName);
-		Sales oneSale = new Sales(cc);
-		Set<Sales> itemsSet = new HashSet<Sales>();
-		if(ClientService.name==null) {	
-			throw new ClientNotFoundException("Enter a client");
-		}
-		itemsSet.add(oneSale);	
-		salesRepository.save(new Sales(representativeName,product, price, quantity,date,cc));
-				
 	}
 	public void createPromotion(Product entity) {
 		entity.setId(ID);
@@ -171,40 +165,5 @@ public class ProductService {
 			newEntity.setPrice(finalPrice2);
 			newEntity = repository.save(newEntity);
 		}
-		
-		
-	}
-
-	public void saleProduct(Product entity) throws AddressException, MessagingException, ClientNotFoundException {
-		entity.setId(ID);
-		ID=0;
-		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-		String username = loggedInUser.getName();
-
-		Optional<Product> product = repository.findById(entity.getId());
-		System.out.println("User id is = " + username);
-		if(product.isPresent()) 
-		{
-			Product newEntity = product.get();
-			int quantity = newEntity.getQuantity();
-			int quantityResult = quantity-1;
-			MailService sendEmail = new MailService();
-			String productData = newEntity.getType() + " " + newEntity.getModel();
-			if(quantityResult>=0) {
-			newEntity.setQuantity(quantityResult);
-			newEntity.setDate(entity.getDate());
-			soldProduct(quantityResult,productData, newEntity.getPrice(), newEntity.getDate());
-			sale(username,productData,newEntity.getPrice(), newEntity.getQuantity(),newEntity.getDate());
-			sendEmail.getMailProperties();
-			if(quantityResult<0) {
-				newEntity.setQuantity(0);
-				sendEmail.getMailProperties();
-			}
-			System.out.println(newEntity.getDate());
-			System.out.println(newEntity.getQuantity());
-			}
-			newEntity = repository.save(newEntity);
-		}
-		
 	}
 }

@@ -468,7 +468,7 @@
                     </table>
 <div id="share-buttons">
     <!-- Email -->
-    <a href="mailto:stanislava1505@gmail.com?Subject=TechBuy Products&amp;Body=I want to ask about...">
+    <a href="mailto:stanislava1505@gmail.com?Subject=TechBuy Products">
         <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
     </a>
  

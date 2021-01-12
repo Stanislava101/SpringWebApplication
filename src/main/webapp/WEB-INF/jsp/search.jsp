@@ -440,7 +440,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Device</th>
-                                <th>Quantity left</th>
                                 <th>Price</th>
                             </tr>
                             
@@ -463,7 +462,6 @@ while(rs.next()){
                          <tr>
 <td><%=rs.getString("id") %></td>
 <td><%=rs.getString("product") %></td>
-<td><%=rs.getString("quantity") %></td>
 <td><%=rs.getString("price") %></td>
 </tr>
 

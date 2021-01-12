@@ -5,17 +5,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import com.sap.exception.RecordNotFoundException;
 import com.sap.model.Role;
 import com.sap.model.User;
-import com.sap.repository.ProductRepository;
 import com.sap.repository.RoleRepository;
-
 import com.sap.repository.SRepresentativeRepository;
 import com.sap.repository.UserRepository;
 
