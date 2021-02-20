@@ -85,25 +85,6 @@
             </li>
             </sec:authorize>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-             <sec:authorize access="hasRole('USER')">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="${contextPath}/clientsData" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Clients</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="${contextPath}/clientsData">List clients</a>
-                         <a class="collapse-item" href="${contextPath}/registerSRepresentatives">Add client</a>
-                    </div>
-                </div>
-            </li>
-            </sec:authorize>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -111,25 +92,6 @@
             <div class="sidebar-heading">
                 Addons
             </div>
-
-<sec:authorize access="hasRole('USER')">
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Manage products</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Manage products</h6>
-                        <a class="collapse-item" href="${contextPath}/productsData">Products</a>
-                        
-                        <a class="collapse-item" href="${contextPath}/saleProducts">Sale product</a>
-                        <a class="collapse-item" href="${contextPath}/soldProductsData">Sold Products</a>
-                </div>
-            </li>
-</sec:authorize>
 
 <sec:authorize access="hasRole('ADMIN')">
             <!-- Nav Item - Pages Collapse Menu -->
@@ -143,38 +105,38 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login">Login</a>
-                        <a class="collapse-item" href="registration">Register</a>
+                        <a class="collapse-item" href="${contextPath}/login">Login</a>
+                        <a class="collapse-item" href="${contextPath}/registration">Register</a>
                     </div>
                 </div>
             </li>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="adminSalesData">
+                <a class="nav-link" href="${contextPath}/adminSalesData">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Catalog</span></a>
             </li>
                         <li class="nav-item">
-                <a class="nav-link" href="searchBySalesRepresentative">
+                <a class="nav-link" href="${contextPath}/searchBySalesRepresentative">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Search by representative</span></a>
             </li>
 </sec:authorize>
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="chartPie">
+                <a class="nav-link" href="${contextPath}/chartPie">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Most wanted comparison</span></a>
             </li>
                        <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="chartLine">
+                <a class="nav-link" href="${contextPath}/chartLine">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>How are the sales going</span></a>
             </li>
                        <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="chart">
+                <a class="nav-link" href="${contextPath}/chart">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Do we need more items</span></a>
             </li>

@@ -52,53 +52,6 @@ pageEncoding="ISO-8859-1"%>
     <sql:query var="products"   dataSource="${myDS}">
         SELECT * FROM sold_product;
     </sql:query>
-    
-    <%
-try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String username = request.getUserPrincipal().getName();
-System.out.println("Username is " + username);
-String strQuery = "SELECT COUNT(*) FROM sales where REPRESENTATIVE_NAME ='" + username +"'";
-ResultSet rs = st.executeQuery(strQuery);
-String Countrow="";
-while(rs.next()){
-Countrow = rs.getString(1);
-out.println("Number of sold products: " +Countrow);
-}
-}
-catch (Exception e){
-e.printStackTrace();
-}
-%>
-<%
-try
-{
-	Class.forName("org.h2.Driver").newInstance();
-	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
-String username = request.getUserPrincipal().getName();
-System.out.println("Username is " + username);
-String strQuery = "SELECT cast(SUM(price) as DOUBLE) FROM sales where REPRESENTATIVE_NAME ='" + username +"'";
-
-
-ResultSet rs = st.executeQuery(strQuery);
-double Countrun=0;
-while(rs.next()){
-Countrun = rs.getDouble(1);
-double profit = Countrun- (0.2+0.3); //dds + sebestoinost
-double roundProfit = (double) Math.round(profit * 100) / 100;
-double roundTurnover = (double) Math.round(Countrun * 100) / 100;
-out.println("Turnover :" + roundTurnover);
-out.println("Profit :" + roundProfit);
-}
-}
-catch (Exception e){
-e.printStackTrace();
-}
-%>
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -475,7 +428,20 @@ e.printStackTrace();
                     <!-- Page Heading -->
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Manage Sold products</h1>
+               <jsp:useBean id="obj" class="com.sap.dbqueries.FetchData"/>
+<%
+String username = request.getUserPrincipal().getName();
+String numOfSales=obj.financialData(username);
+out.println("Number of sold products: " +numOfSales);
+%>
+<%
+double profit=obj.getProfits(username);
+out.println("Profit: "+ profit);
+%>
+<%
+double turnover=obj.getTurnover(username);
+out.println("Turnover: "+ turnover);
+%>
                             </div>
 
                     <!-- Content Row -->

@@ -452,17 +452,10 @@
                             </tr>
                         </thead>
                         <tbody>
+ <jsp:useBean id="obj" class="com.sap.dbqueries.FetchDataClient"/>
  <% 
- try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
 String username = request.getUserPrincipal().getName();
-String date=request.getParameter("date");
-String date2=request.getParameter("date2");
-String strQuery = "select * from client  where representative='" +username+"' ";
-ResultSet rs = st.executeQuery(strQuery);
+ResultSet rs = obj.getClientData(username);
 String Countrow="";
 while(rs.next()){
 Countrow = rs.getString(1);
@@ -481,10 +474,6 @@ Countrow = rs.getString(1);
  </td>
 </tr>
 <%
-}
-}
-catch (Exception e){
-e.printStackTrace();
 }
 %>
                         </tbody>

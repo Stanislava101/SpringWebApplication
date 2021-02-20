@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 </head>
 <body style="background-image: url('${contextPath}/resources/img/signup-bg.jpg');">
-
+ <sec:authorize access="hasRole('ADMIN')">
     <div class="main">
         <section class="signup">
             <div class="container">
@@ -66,7 +66,7 @@
             </div>
         </section>
     </div>
-
+</sec:authorize>
     <!-- JS -->
     <script src="${contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${contextPath}/resources/js/main.js"></script>

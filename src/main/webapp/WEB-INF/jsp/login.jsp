@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="${contextPath}/resources/css/style.css">
 </head>
 <body style="background-image: url('${contextPath}/resources/img/signin1.jpeg');">
-
     <div class="main">
         <section class="signup">
             <div class="container">

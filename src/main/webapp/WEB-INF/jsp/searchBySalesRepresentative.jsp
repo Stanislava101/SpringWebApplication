@@ -40,6 +40,7 @@ pageEncoding="ISO-8859-1"%>
 
 </head>
 <body id="page-top">
+ <sec:authorize access="hasRole('ADMIN')">
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -472,7 +473,7 @@ pageEncoding="ISO-8859-1"%>
             </div>
         </div>
     </div>
-
+</sec:authorize>
     <!-- Bootstrap core JavaScript-->
     <script src="${contextPath}/resources/vendor/jquery/jquery.min.js"></script>
     <script src="${contextPath}/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

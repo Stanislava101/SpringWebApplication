@@ -445,18 +445,11 @@
                             
                         </thead>
                         <tbody>
+                        <jsp:useBean id="obj" class="com.sap.dbqueries.FetchDataPeriod"/>
                           <%
-try
-{
-	Class.forName("org.h2.Driver").newInstance();
-	Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-	Statement st=con.createStatement();
 	String username = request.getUserPrincipal().getName();
-	System.out.println("Username is " + username);
 	String date=request.getParameter("date");
-	System.out.println(date);
-	String strQuery = "select * from sales where date='" + date +"' AND REPRESENTATIVE_NAME='" + username +"'";
-	ResultSet rs = st.executeQuery(strQuery);
+	ResultSet rs = obj.searchByDayRepresentative(date,username);
 	if(rs.isBeforeFirst())
 	{
 while(rs.next()){
@@ -466,7 +459,6 @@ while(rs.next()){
 <td><%=rs.getString("product") %></td>
 <td><%=rs.getString("price") %></td>
 </tr>
-
                         </tbody>
 <%}%>
                     </table>
@@ -475,10 +467,6 @@ while(rs.next()){
 } else
 {
     out.println("There are no sales on this day. ");
-}
-}
-catch (Exception e){
-e.printStackTrace();
 }
 %>
                     </sec:authorize>

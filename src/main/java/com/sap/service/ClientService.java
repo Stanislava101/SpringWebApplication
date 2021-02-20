@@ -70,7 +70,7 @@ public class ClientService {
 			// update existing entry 
 			Optional<Client> client = repository.findById(entity.getId());
 			
-			if(client.isPresent()) 
+			if(client.isPresent()) //check if there is a value inside the Optional object
 			{
 				Client newEntity = client.get();
 				newEntity.setName(entity.getName());

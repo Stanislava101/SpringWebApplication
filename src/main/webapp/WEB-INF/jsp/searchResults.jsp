@@ -440,38 +440,20 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Device</th>
-                                <th>Quantity left</th>
                                 <th>Price</th>
+                                <th>Date</th>
                             </tr>
                             
                         </thead>
-                        <tbody>  <%
-try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
+                        <tbody>
+                        <jsp:useBean id="obj" class="com.sap.dbqueries.FetchData"/>
+                          <%
 String representative=request.getParameter("representative");
-System.out.println(representative);
-
-String strQuery = "select * from sales where REPRESENTATIVE_NAME ='" + representative +"'";
-
-ResultSet rs = st.executeQuery(strQuery);
+ResultSet rs = obj.searchByRepresentative(representative);
 if(rs.isBeforeFirst())
 {
 while(rs.next()){
 %>
-<!-- <table class="table table-striped table-responsive-md">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Device</th>
-                                <th>Quantity left</th>
-                                <th>Price</th>
-                            </tr>
-                            
-                        </thead>
-                        <tbody> -->
 <tr>
 <td><%=rs.getString("id") %></td>
 <td><%=rs.getString("product") %></td>
@@ -485,10 +467,6 @@ while(rs.next()){
 } else
 {
     out.println("The representative doesn't exist or he doesn't have any sales. ");
-}
-}
-catch (Exception e){
-e.printStackTrace();
 }
 %>
                     </sec:authorize>

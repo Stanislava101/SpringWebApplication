@@ -123,19 +123,19 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="chartPie">
+                <a class="nav-link" href="${contextPath}/chartPie">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Most wanted comparison</span></a>
             </li>
                        <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="chartLine">
+                <a class="nav-link" href="${contextPath}/chartLine">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>How are the sales going</span></a>
             </li>
                        <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="chart">
+                <a class="nav-link" href="${contextPath}/chart">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Do we need more items</span></a>
             </li>

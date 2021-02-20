@@ -445,22 +445,12 @@
                             
                         </thead>
                         <tbody> 
+<jsp:useBean id="obj" class="com.sap.dbqueries.FetchDataPeriod"/>
                           <%
-try
-{
-Class.forName("org.h2.Driver").newInstance();
-Connection con=DriverManager.getConnection("jdbc:h2:mem:ecommerce","root","rootsa");
-Statement st=con.createStatement();
 String username = request.getUserPrincipal().getName();
-System.out.println("Username is " + username);
 String date=request.getParameter("date");
 String date2=request.getParameter("date2");
-System.out.println(date);
-System.out.println(date2);
-//String strQuery = "select * from sold_product where date='" + date +"' ";
-String strQuery = "select * from sales where date >='" +date +"' AND date<='" + date2 +"' AND REPRESENTATIVE_NAME='" + username +"'";
-//String strQuery = "select * from sold_product where id=1";
-ResultSet rs = st.executeQuery(strQuery);
+ResultSet rs = obj.searchPeriod(date,date2,username);
 if(rs.isBeforeFirst())
 {
 while(rs.next()){
@@ -479,10 +469,6 @@ while(rs.next()){
 } else
 {
     out.println("There are no sales on this period. ");
-}
-}
-catch (Exception e){
-e.printStackTrace();
 }
 %>
                  </sec:authorize>
